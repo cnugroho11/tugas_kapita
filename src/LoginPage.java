@@ -103,7 +103,7 @@ public class LoginPage extends javax.swing.JFrame {
             new MainPage().setVisible(true);
         }
         else{
-            JOptionPane.showMessageDialog(this, "Username atau assword anda salah");
+            JOptionPane.showMessageDialog(this, "Username atau Password anda salah");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

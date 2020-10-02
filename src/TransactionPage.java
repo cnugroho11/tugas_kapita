@@ -9,47 +9,46 @@ import javax.swing.table.DefaultTableModel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  *
  * @author cnugr
  */
-public class InventoryPage extends javax.swing.JFrame {
-
+public class TransactionPage extends javax.swing.JFrame {
+    
     private DefaultTableModel model;
 
     /**
-     * Creates new form InventoryPage
+     * Creates new form TransactionPage
      */
-    public InventoryPage() {
+    public TransactionPage() {
         initComponents();
-
+        
         model = new DefaultTableModel();
-        tblItem.setModel(model);
+        tblTransaction.setModel(model);
 
         model.addColumn("ID");
-        model.addColumn("Nama");
-        model.addColumn("Price");
-        model.addColumn("Stock");
-        model.addColumn("Supplier_ID");
-
+        model.addColumn("Quantity");
+        model.addColumn("Transaction_ID");
+        model.addColumn("Item_ID");
+        
         getData();
     }
-
-    public void getData() {
+    
+    public void getData(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
 
         try {
             Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM item";
+            String sql = "SELECT * FROM transaction_item";
             ResultSet res = stat.executeQuery(sql);
-            while (res.next()) {
-                Object[] obj = new Object[5];
+            while(res.next ()){
+                Object[ ] obj = new Object[4];
                 obj[0] = res.getString("ID");
-                obj[1] = res.getString("Nama");
-                obj[2] = res.getString("Price");
-                obj[3] = res.getString("Stock");
-                obj[4] = res.getString("Supplier_ID");
+                obj[1] = res.getString("Quantity");
+                obj[2] = res.getString("Transaction_ID");
+                obj[3] = res.getString("Item_ID");
 
                 model.addRow(obj);
             }
@@ -70,7 +69,7 @@ public class InventoryPage extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblItem = new javax.swing.JTable();
+        tblTransaction = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
@@ -79,9 +78,9 @@ public class InventoryPage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Inventory Barang");
+        jLabel1.setText("Daftar Transaksi");
 
-        tblItem.setModel(new javax.swing.table.DefaultTableModel(
+        tblTransaction.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -91,16 +90,8 @@ public class InventoryPage extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblItem);
+        ));
+        jScrollPane1.setViewportView(tblTransaction);
 
         btnAdd.setText("Add Data");
 
@@ -123,9 +114,9 @@ public class InventoryPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
+                        .addGap(199, 199, 199)
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -144,9 +135,9 @@ public class InventoryPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnDelete)
@@ -180,20 +171,20 @@ public class InventoryPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InventoryPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransactionPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InventoryPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransactionPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InventoryPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransactionPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InventoryPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TransactionPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InventoryPage().setVisible(true);
+                new TransactionPage().setVisible(true);
             }
         });
     }
@@ -205,6 +196,6 @@ public class InventoryPage extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblItem;
+    private javax.swing.JTable tblTransaction;
     // End of variables declaration//GEN-END:variables
 }
