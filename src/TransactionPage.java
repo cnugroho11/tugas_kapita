@@ -128,6 +128,11 @@ public class TransactionPage extends javax.swing.JFrame {
         });
 
         btnDelete.setText("Delete Data");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("Edit Data");
         btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -319,6 +324,23 @@ public class TransactionPage extends javax.swing.JFrame {
             e.printStackTrace();
          }
     }//GEN-LAST:event_btnEditMouseClicked
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tblTransaction.getModel();
+        //Ambil baris
+        try{
+            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
+            int SelectedRow = tblTransaction.getSelectedRow();
+            //model.removeRow(SelectedRow);
+            String cell = tblTransaction.getModel().getValueAt(SelectedRow, 0).toString();
+            String sql = "DELETE FROM transaction_item where Id = "+cell;
+            int res = stat.executeUpdate(sql);
+            getData();
+            //System.out.println(sql);
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+>>>>>>> 27e9a1d4d7653765e951bd97e3779c95805e607f
 
     /**
      * @param args the command line arguments

@@ -137,6 +137,11 @@ public class InventoryPage extends javax.swing.JFrame {
         });
 
         btnDelete.setText("Delete Data");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("Edit Data");
         btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -337,6 +342,22 @@ public class InventoryPage extends javax.swing.JFrame {
             e.printStackTrace();
          }
     }//GEN-LAST:event_btnEditMouseClicked
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+       DefaultTableModel model = (DefaultTableModel) tblItem.getModel();
+        //Ambil baris
+        try{
+            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
+            int SelectedRow = tblItem.getSelectedRow();
+            //model.removeRow(SelectedRow);
+            String cell = tblItem.getModel().getValueAt(SelectedRow, 0).toString();
+            String sql = "DELETE FROM item where Id = '"+cell+"'";
+            int res = stat.executeUpdate(sql);
+            getData();
+            //System.out.println(SelectedRow);
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
