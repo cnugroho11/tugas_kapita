@@ -102,6 +102,11 @@ public class LoginPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Berhasil login admin");
             new MainPage().setVisible(true);
         }
+        else if(txtUsername.getText().equals("user") && txtPassword.getText().equals("user")){
+            this.dispose();
+            JOptionPane.showMessageDialog(this, "Berhasil login user");
+            new MainPageUser().setVisible(true);
+        }
         else{
             JOptionPane.showMessageDialog(this, "Username atau Password anda salah");
         }

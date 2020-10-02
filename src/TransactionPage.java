@@ -96,6 +96,11 @@ public class TransactionPage extends javax.swing.JFrame {
         btnAdd.setText("Add Data");
 
         btnDelete.setText("Delete Data");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("Edit Data");
 
@@ -153,6 +158,23 @@ public class TransactionPage extends javax.swing.JFrame {
         this.dispose();
         new MainPage().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tblTransaction.getModel();
+        //Ambil baris
+        try{
+            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
+            int SelectedRow = tblTransaction.getSelectedRow();
+            //model.removeRow(SelectedRow);
+            String cell = tblTransaction.getModel().getValueAt(SelectedRow, 0).toString();
+            String sql = "DELETE FROM transaction_item where Id = "+cell;
+            int res = stat.executeUpdate(sql);
+            getData();
+            //System.out.println(sql);
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
