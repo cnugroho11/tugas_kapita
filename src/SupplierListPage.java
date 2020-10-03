@@ -314,8 +314,7 @@ public class SupplierListPage extends javax.swing.JFrame {
             Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
             stat.executeUpdate("INSERT INTO supplier VALUES " 
                 + "Nama='"       + txtNama.getText() + "', "
-                + "JoinDate='"      + txtJoinDate.getText() + "'"
-                + "WHERE Id = '"+txtId.getText()+"'");
+                + "JoinDate='"      + txtJoinDate.getText() + "'");
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
           } catch (Exception e) {
