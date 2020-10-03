@@ -109,6 +109,11 @@ public class SupplierListPage extends javax.swing.JFrame {
                 btnAddMouseClicked(evt);
             }
         });
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete Data");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -303,6 +308,10 @@ public class SupplierListPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,e);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments

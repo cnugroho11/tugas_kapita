@@ -95,7 +95,7 @@ public class InventoryPage extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtStock = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        cbSupplier = new javax.swing.JComboBox<>();
+        cbSupplier = new javax.swing.JComboBox<String>();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -135,6 +135,11 @@ public class InventoryPage extends javax.swing.JFrame {
                 btnAddMouseClicked(evt);
             }
         });
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete Data");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -147,6 +152,11 @@ public class InventoryPage extends javax.swing.JFrame {
         btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEditMouseClicked(evt);
+            }
+        });
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -188,6 +198,12 @@ public class InventoryPage extends javax.swing.JFrame {
         });
 
         jLabel5.setText("Stock");
+
+        cbSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSupplierActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Supplier");
 
@@ -358,6 +374,28 @@ public class InventoryPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,e);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void cbSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSupplierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbSupplierActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        try {
+            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
+            stat.executeUpdate("Insert INTO item " + "VALUES " 
+                + "Nama='"       + txtNama.getText() + "', "
+                + "Price='"      + txtPrice.getText() + "', "
+                + "Stock='"      + txtPrice.getText() + "',"
+                + "Supplier_Id='"      + cbSupplier.getSelectedItem() + "'");
+            getData();
+            //JOptionPane.showMessageDialog(null, "Update Berhasil");
+          } catch (Exception e) {
+            e.printStackTrace();
+         }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
 
     /**
      * @param args the command line arguments

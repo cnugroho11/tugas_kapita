@@ -340,7 +340,7 @@ public class TransactionPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,e);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
->>>>>>> 27e9a1d4d7653765e951bd97e3779c95805e607f
+//>>>>>>> 27e9a1d4d7653765e951bd97e3779c95805e607f
 
     /**
      * @param args the command line arguments
