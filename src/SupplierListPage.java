@@ -310,7 +310,17 @@ public class SupplierListPage extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+       try {
+            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
+            stat.executeUpdate("INSERT INTO supplier VALUES " 
+                + "Nama='"       + txtNama.getText() + "', "
+                + "JoinDate='"      + txtJoinDate.getText() + "'"
+                + "WHERE Id = '"+txtId.getText()+"'");
+            getData();
+//            JOptionPane.showMessageDialog(null, "Update Berhasil");
+          } catch (Exception e) {
+            e.printStackTrace();
+         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
