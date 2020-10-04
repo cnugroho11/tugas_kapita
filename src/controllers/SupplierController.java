@@ -64,7 +64,6 @@ public class SupplierController {
             + "JoinDate='"      + supplier.getJoinDate() + "'"
             + "WHERE Id = '"+supplier.getId()+"'");
     }
-    
     public void delete(String id) throws SQLException, SQLException{
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
         String sql = "DELETE FROM supplier where Id = '"+id+"'";
