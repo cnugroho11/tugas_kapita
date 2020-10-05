@@ -22,7 +22,6 @@ public class SupplierListPage extends javax.swing.JFrame {
 
     private DefaultTableModel model;
     private SupplierController supplierController = new SupplierController();
-
     /**
      * Creates new form SupplierListPage
      */

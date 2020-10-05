@@ -6,8 +6,11 @@ import controllers.SupplierController;
 import java.sql.PreparedStatement;
 import tools.Koneksi;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Item;
@@ -27,13 +30,11 @@ public class InventoryPage extends javax.swing.JFrame {
     private DefaultTableModel model;
     private ItemController itemController = new ItemController();
     private SupplierController supplierController = new SupplierController();
-
     /**
      * Creates new form InventoryPage
      */
     public InventoryPage() {
         initComponents();
-
         model = new DefaultTableModel();
         tblItem.setModel(model);
 
@@ -41,7 +42,7 @@ public class InventoryPage extends javax.swing.JFrame {
         model.addColumn("Nama");
         model.addColumn("Price");
         model.addColumn("Stock");
-        model.addColumn("Supplier_ID");
+        model.addColumn("Supplier");
 
         getData();
     }
@@ -52,7 +53,8 @@ public class InventoryPage extends javax.swing.JFrame {
 
         try {
             for (Item item : itemController.getAll()) {
-                model.addRow(new Object[]{item.getId(), item.getNama(), item.getPrice(), item.getStock(), item.getSupplier()});
+                Supplier s = supplierController.findById(item.getSupplier());
+                model.addRow(new Object[]{item.getId(), item.getNama(), item.getPrice(), item.getStock(), item.getSupplier()+" "+s.getNama()});
             }
             for (Supplier supplier : supplierController.getAll()) {
                 cbSupplier.addItem(supplier.getId() +" "+supplier.getNama());
@@ -272,12 +274,15 @@ public class InventoryPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void tblItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblItemMouseClicked
-        // TODO add your handling code here:
-        txtId.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 0).toString());
-        txtNama.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 1).toString());
-        txtPrice.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 2).toString());
-        txtStock.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 3).toString());
-        cbSupplier.setSelectedItem(tblItem.getValueAt(tblItem.getSelectedRow(), 4).toString());
+            // TODO add your handling code here:
+//            String idSupplier = tblItem.getValueAt(tblItem.getSelectedRow(), 4).toString();
+//            Supplier s = supplierController.findById(idSupplier);
+            txtId.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 0).toString());
+            txtNama.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 1).toString());
+            txtPrice.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 2).toString());
+            txtStock.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 3).toString());
+            cbSupplier.setSelectedItem(tblItem.getValueAt(tblItem.getSelectedRow(), 4).toString());
+        
     }//GEN-LAST:event_tblItemMouseClicked
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed

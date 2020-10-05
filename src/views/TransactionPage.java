@@ -41,7 +41,7 @@ public class TransactionPage extends javax.swing.JFrame {
         model.addColumn("ID");
         model.addColumn("Quantity");
         model.addColumn("Transaction_ID");
-        model.addColumn("Item_ID");
+        model.addColumn("Item");
 
         getData();
     }
@@ -52,7 +52,8 @@ public class TransactionPage extends javax.swing.JFrame {
 
         try {
             for (TransactionItem trans : transactionItemController.getAll()) {
-                model.addRow(new Object[]{trans.getId(), trans.getQuantity(), trans.getTransaction(), trans.getItem()});
+                Item i = itemController.findById(trans.getItem());
+                model.addRow(new Object[]{trans.getId(), trans.getQuantity(), trans.getTransaction(), trans.getItem()+" "+i.getNama()});
             }
             for (Item item : itemController.getAll()) {
                 cbItem.addItem(item.getId() + " " + item.getNama());
@@ -268,7 +269,7 @@ public class TransactionPage extends javax.swing.JFrame {
         try {
             String itm = cbItem.getSelectedItem().toString();
             itm = itm.substring(0, itm.indexOf(' '));
-            transactionItemController.update(Integer.parseInt(txtId.getText()), Integer.parseInt(txtQuantity.getText()), cbTransaksi.getSelectedItem().toString(), cbItem.getSelectedItem().toString());
+            transactionItemController.update(Integer.parseInt(txtId.getText()), Integer.parseInt(txtQuantity.getText()), cbTransaksi.getSelectedItem().toString(), cbItem.getSelectedItem().toString().split(" ")[0]);
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
         } catch (Exception e) {
