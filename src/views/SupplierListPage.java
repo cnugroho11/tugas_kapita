@@ -1,6 +1,5 @@
 package views;
 
-
 import java.sql.PreparedStatement;
 import tools.Koneksi;
 import java.sql.ResultSet;
@@ -13,13 +12,12 @@ import javax.swing.table.DefaultTableModel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author cnugr
  */
 public class SupplierListPage extends javax.swing.JFrame {
-    
+
     private DefaultTableModel model;
 
     /**
@@ -27,19 +25,19 @@ public class SupplierListPage extends javax.swing.JFrame {
      */
     public SupplierListPage() {
         initComponents();
-        
+
         model = new DefaultTableModel();
         tblSupplier.setModel(model);
 
         model.addColumn("ID");
         model.addColumn("Nama");
         model.addColumn("JoinDate");
-        
+
         getData();
-        
+
     }
-    
-    public void getData(){
+
+    public void getData() {
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
 
@@ -47,8 +45,8 @@ public class SupplierListPage extends javax.swing.JFrame {
             Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
             String sql = "SELECT * FROM supplier";
             ResultSet res = stat.executeQuery(sql);
-            while(res.next ()){
-                Object[ ] obj = new Object[3];
+            while (res.next()) {
+                Object[] obj = new Object[3];
                 obj[0] = res.getString("ID");
                 obj[1] = res.getString("Nama");
                 obj[2] = res.getString("JoinDate");
@@ -70,7 +68,6 @@ public class SupplierListPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSupplier = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
@@ -85,9 +82,7 @@ public class SupplierListPage extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Daftar Supplier");
+        setTitle("Daftar Supplier");
 
         tblSupplier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,31 +102,21 @@ public class SupplierListPage extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblSupplier);
 
-        btnAdd.setText("Add Data");
-        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAddMouseClicked(evt);
-            }
-        });
+        btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
             }
         });
 
-        btnDelete.setText("Delete Data");
+        btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
             }
         });
 
-        btnEdit.setText("Edit Data");
-        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMouseClicked(evt);
-            }
-        });
+        btnEdit.setText("Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -174,54 +159,39 @@ public class SupplierListPage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBack))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(204, 204, 204)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtId)
+                    .addComponent(txtNama)
+                    .addComponent(txtJoinDate)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtId)
-                            .addComponent(txtNama)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5))
-                                .addGap(0, 255, Short.MAX_VALUE))
-                            .addComponent(txtJoinDate))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
-                .addContainerGap())
+                                .addComponent(btnAdd)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEdit)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete))
+                            .addComponent(btnBack)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5))
+                        .addGap(0, 117, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdd)
-                            .addComponent(btnDelete)
-                            .addComponent(btnEdit)
-                            .addComponent(btnBack))
-                        .addGap(57, 57, 57))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(35, 35, 35)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,7 +203,12 @@ public class SupplierListPage extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtJoinDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAdd)
+                            .addComponent(btnDelete)
+                            .addComponent(btnEdit))
+                        .addGap(57, 57, 57))))
         );
 
         pack();
@@ -244,20 +219,6 @@ public class SupplierListPage extends javax.swing.JFrame {
         this.dispose();
         new MainPage().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
-
-    private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
-        // TODO add your handling code here:
-        try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            stat.executeUpdate("INSERT INTO supplier VALUES('" + txtId.getText() + "','"
-            + txtNama.getText() + "','"
-            + txtJoinDate.getText() + "')");
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-    }//GEN-LAST:event_btnAddMouseClicked
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
@@ -279,52 +240,45 @@ public class SupplierListPage extends javax.swing.JFrame {
     }//GEN-LAST:event_tblSupplierMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
-        // TODO add your handling code here:
         try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            stat.executeUpdate("UPDATE supplier set " 
-                + "Nama='"       + txtNama.getText() + "', "
-                + "JoinDate='"      + txtJoinDate.getText() + "'"
-                + "WHERE Id = '"+txtId.getText()+"'");
+            PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE supplier SET Nama=?, JoinDate=? WHERE Id=?");
+            stat.setString(3, txtId.getText());
+            stat.setString(1, txtNama.getText());
+            stat.setString(2, txtJoinDate.getText());
+            stat.executeUpdate();
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-         }
-    }//GEN-LAST:event_btnEditMouseClicked
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         DefaultTableModel model = (DefaultTableModel) tblSupplier.getModel();
         //Ambil baris
-        try{
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            int SelectedRow = tblSupplier.getSelectedRow();
-            //model.removeRow(SelectedRow);
-            String cell = tblSupplier.getModel().getValueAt(SelectedRow, 0).toString();
-            String sql = "DELETE FROM supplier where Id = '"+cell+"'";
-            int res = stat.executeUpdate(sql);
+        try {
+            PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM supplier WHERE Id = ?");
+            stat.setString(1, txtId.getText());
+            stat.executeUpdate();
             getData();
-            //System.out.println(cell);
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null,e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       try {
+        try {
             //PreparedStatement stat = Koneksi.getKoneksi().createStatement();
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            stat.executeUpdate("INSERT INTO supplier VALUES('" + txtId.getText() + "','"
-            + txtNama.getText() + "','"
-            + txtJoinDate.getText() + "')");
+            PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO supplier VALUES (?,?,?)");
+            stat.setString(1, txtId.getText());
+            stat.setString(2, txtNama.getText());
+            stat.setString(3, txtJoinDate.getText());
+            stat.executeUpdate();
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-         }
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
@@ -367,7 +321,6 @@ public class SupplierListPage extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

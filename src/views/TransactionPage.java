@@ -1,6 +1,7 @@
 package views;
 
 
+import java.sql.PreparedStatement;
 import tools.Koneksi;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -67,7 +68,8 @@ public class TransactionPage extends javax.swing.JFrame {
             while(res.next ()){
                 Object[ ] obj = new Object[4];
                 obj[0] = res.getString("ID");
-                cbItem.addItem(obj[0].toString());
+                obj[1] = res.getString("Nama");
+                cbItem.addItem(obj[0].toString()+" "+obj[1].toString());
             }
 
         } catch (Exception e) {
@@ -84,7 +86,6 @@ public class TransactionPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTransaction = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
@@ -101,9 +102,6 @@ public class TransactionPage extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Daftar Transaksi");
 
         tblTransaction.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -123,26 +121,21 @@ public class TransactionPage extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblTransaction);
 
-        btnAdd.setText("Add Data");
+        btnAdd.setText("Add");
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAddMouseClicked(evt);
             }
         });
 
-        btnDelete.setText("Delete Data");
+        btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
             }
         });
 
-        btnEdit.setText("Edit Data");
-        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMouseClicked(evt);
-            }
-        });
+        btnEdit.setText("Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -193,49 +186,41 @@ public class TransactionPage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(199, 199, 199)
-                        .addComponent(jLabel1)
-                        .addGap(0, 475, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBack))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbTransaksi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtId)
+                    .addComponent(txtQuantity)
+                    .addComponent(cbItem, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbTransaksi, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtQuantity, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(cbItem, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(btnBack)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAdd)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEdit)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete)))
+                        .addGap(0, 98, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addComponent(btnBack)
+                        .addGap(24, 24, 24)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,14 +235,13 @@ public class TransactionPage extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd)
-                    .addComponent(btnDelete)
-                    .addComponent(btnEdit)
-                    .addComponent(btnBack))
-                .addGap(46, 46, 46))
+                        .addComponent(cbItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDelete)
+                            .addComponent(btnAdd)
+                            .addComponent(btnEdit))
+                        .addGap(46, 46, 46))))
         );
 
         pack();
@@ -294,12 +278,13 @@ public class TransactionPage extends javax.swing.JFrame {
 
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
         try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            stat.executeUpdate("INSERT INTO transaction_item VALUES('" 
-            + txtId.getText() + "','"
-            + txtQuantity.getText() + "','"
-            + cbTransaksi.getSelectedItem() + "','"
-            + cbItem.getSelectedItem() + "')");
+            String itm = cbItem.getSelectedItem().toString();
+            PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO transaction_item VALUES (?,?,?,?)");
+            stat.setInt(1, Integer.parseInt(txtId.getText()));
+            stat.setInt(2, Integer.parseInt(txtQuantity.getText()));
+            stat.setInt(3, Integer.parseInt(cbTransaksi.getSelectedItem().toString()));
+            stat.setString(4, itm.substring(0, itm.indexOf(' ')));
+            stat.executeUpdate();
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
           } catch (Exception e) {
@@ -309,34 +294,27 @@ public class TransactionPage extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
-        // TODO add your handling code here:
         try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            stat.executeUpdate("UPDATE transaction_item set " 
-                + "Quantity='"       + txtQuantity.getText() + "', "
-                + "Transaction_Id='"      + cbTransaksi.getSelectedItem() + "', "
-                + "Item_Id='"      + cbItem.getSelectedItem() + "'"
-                + "WHERE Id = '"+txtId.getText()+"'");
-            getData();
+            String itm = cbItem.getSelectedItem().toString();
+            PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE transaction_item SET Quantity=?, Transaction_Id=?, Item_Id=? WHERE Id=?");
+            stat.setInt(4, Integer.parseInt(txtId.getText()));
+            stat.setInt(1, Integer.parseInt(txtQuantity.getText()));
+            stat.setInt(2, Integer.parseInt(cbTransaksi.getSelectedItem().toString()));
+            stat.setString(3, itm.substring(0, itm.indexOf(' ')));
+            stat.executeUpdate();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
           } catch (Exception e) {
             e.printStackTrace();
          }
-    }//GEN-LAST:event_btnEditMouseClicked
+    }//GEN-LAST:event_btnEditActionPerformed
+
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         DefaultTableModel model = (DefaultTableModel) tblTransaction.getModel();
         //Ambil baris
         try{
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            int SelectedRow = tblTransaction.getSelectedRow();
-            //model.removeRow(SelectedRow);
-            String cell = tblTransaction.getModel().getValueAt(SelectedRow, 0).toString();
-            String sql = "DELETE FROM transaction_item where Id = "+cell;
-            int res = stat.executeUpdate(sql);
+            PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM transaction_item WHERE Id = ?");
+            stat.setString(1, txtId.getText());
+            stat.executeUpdate();
             getData();
             //System.out.println(sql);
         }catch (Exception e){
@@ -387,7 +365,6 @@ public class TransactionPage extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JComboBox<String> cbItem;
     private javax.swing.JComboBox<String> cbTransaksi;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

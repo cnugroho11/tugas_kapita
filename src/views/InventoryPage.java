@@ -1,6 +1,7 @@
 package views;
 
 
+import java.sql.PreparedStatement;
 import tools.Koneksi;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -66,7 +67,7 @@ public class InventoryPage extends javax.swing.JFrame {
                 obj[1] = res.getString("Nama");
                 obj[2] = res.getString("JoinDate");
 //                suppliers.add(obj[0].toString());
-                cbSupplier.addItem(obj[0].toString());
+                cbSupplier.addItem(obj[0].toString() + " " +obj[1].toString());
             }
 
         } catch (Exception e) {
@@ -83,7 +84,6 @@ public class InventoryPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblItem = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
@@ -102,9 +102,7 @@ public class InventoryPage extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Inventory Barang");
+        setTitle("Inventory Barang");
 
         tblItem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,31 +130,21 @@ public class InventoryPage extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblItem);
 
-        btnAdd.setText("Add Data");
-        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAddMouseClicked(evt);
-            }
-        });
+        btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddActionPerformed(evt);
             }
         });
 
-        btnDelete.setText("Delete Data");
+        btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
             }
         });
 
-        btnEdit.setText("Edit Data");
-        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditMouseClicked(evt);
-            }
-        });
+        btnEdit.setText("Edit");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -202,12 +190,6 @@ public class InventoryPage extends javax.swing.JFrame {
 
         jLabel5.setText("Stock");
 
-        cbSupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbSupplierActionPerformed(evt);
-            }
-        });
-
         jLabel6.setText("Supplier");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,58 +197,38 @@ public class InventoryPage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdd)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDelete)
-                        .addGap(18, 18, 18)
                         .addComponent(btnEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBack))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cbSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel6))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNama, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtId)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel2))
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDelete))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtId)
+                        .addComponent(txtNama)
+                        .addComponent(jLabel5)
+                        .addComponent(txtStock, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addComponent(txtPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(btnBack)
+                        .addComponent(cbSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addComponent(btnBack)
+                        .addGap(28, 28, 28)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -274,7 +236,7 @@ public class InventoryPage extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(17, 17, 17)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,17 +244,19 @@ public class InventoryPage extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd)
-                    .addComponent(btnDelete)
-                    .addComponent(btnEdit)
-                    .addComponent(btnBack))
-                .addGap(46, 46, 46))
+                        .addComponent(cbSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAdd)
+                            .addComponent(btnDelete)
+                            .addComponent(btnEdit))
+                        .addGap(46, 46, 46))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -319,23 +283,6 @@ public class InventoryPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
 
-    private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
-        // TODO add your handling code here:
-        try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            stat.executeUpdate("INSERT INTO item VALUES('" 
-            + txtId.getText() + "','"
-            + txtNama.getText() + "','"
-            + txtPrice.getText() + "','"
-            + txtStock.getText() + "','"
-            + cbSupplier.getSelectedItem() + "')");
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-    }//GEN-LAST:event_btnAddMouseClicked
-
     private void tblItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblItemMouseClicked
         // TODO add your handling code here:
         txtId.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 0).toString());
@@ -345,60 +292,51 @@ public class InventoryPage extends javax.swing.JFrame {
         cbSupplier.setSelectedItem(tblItem.getValueAt(tblItem.getSelectedRow(), 4).toString());
     }//GEN-LAST:event_tblItemMouseClicked
 
-    private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
-        // TODO add your handling code here:
-        try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            stat.executeUpdate("UPDATE item set " 
-                + "Nama='"       + txtNama.getText() + "', "
-                + "Price='"      + txtPrice.getText() + "', "
-                + "Stock='"      + txtPrice.getText() + "',"
-                + "Supplier_Id='"      + cbSupplier.getSelectedItem() + "'"
-                + "WHERE Id = '"+txtId.getText()+"'");
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
-            e.printStackTrace();
-         }
-    }//GEN-LAST:event_btnEditMouseClicked
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
        DefaultTableModel model = (DefaultTableModel) tblItem.getModel();
         //Ambil baris
         try{
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            int SelectedRow = tblItem.getSelectedRow();
-            //model.removeRow(SelectedRow);
-            String cell = tblItem.getModel().getValueAt(SelectedRow, 0).toString();
-            String sql = "DELETE FROM item where Id = '"+cell+"'";
-            int res = stat.executeUpdate(sql);
+            PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM item WHERE Id = ?");
+            stat.setString(1, txtId.getText());
+            stat.executeUpdate();
             getData();
-            //System.out.println(SelectedRow);
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void cbSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSupplierActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbSupplierActionPerformed
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            stat.executeUpdate("INSERT INTO item VALUES('" 
-            + txtId.getText() + "','"
-            + txtNama.getText() + "','"
-            + txtPrice.getText() + "','"
-            + txtStock.getText() + "','"
-            + cbSupplier.getSelectedItem() + "')");
+            String supp = cbSupplier.getSelectedItem().toString();
+            PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
+            stat.setString(1, txtId.getText());
+            stat.setString(2, txtNama.getText());
+            stat.setInt(3, Integer.parseInt(txtPrice.getText()));
+            stat.setInt(4, Integer.parseInt(txtStock.getText()));
+            stat.setString(5, supp.substring(0, supp.indexOf(' ')));
+            stat.executeUpdate();
             getData();
-            //JOptionPane.showMessageDialog(null, "Update Berhasil");
+//            JOptionPane.showMessageDialog(null, "Update Berhasil");
           } catch (Exception e) {
             e.printStackTrace();
-         }
+          }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        try {
+            String supp = cbSupplier.getSelectedItem().toString();
+            PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE item SET Nama=?, Price=?, Stock=?, Supplier_Id=? WHERE Id=?");
+            stat.setString(5, txtId.getText());
+            stat.setString(1, txtNama.getText());
+            stat.setInt(2, Integer.parseInt(txtPrice.getText()));
+            stat.setInt(3, Integer.parseInt(txtStock.getText()));
+            stat.setString(4, supp.substring(0, supp.indexOf(' ')));
+            stat.executeUpdate();
+            getData();
+//            JOptionPane.showMessageDialog(null, "Update Berhasil");
+          } catch (Exception e) {
+            e.printStackTrace();
+         }
     }//GEN-LAST:event_btnEditActionPerformed
 
     /**
@@ -442,7 +380,6 @@ public class InventoryPage extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JComboBox<String> cbSupplier;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
