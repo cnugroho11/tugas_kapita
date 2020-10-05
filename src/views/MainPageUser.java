@@ -1,6 +1,5 @@
 package views;
 
-
 import tools.Koneksi;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -273,16 +272,21 @@ public class MainPageUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnKonfirmasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKonfirmasiActionPerformed
-        double tmpTotal = Integer.parseInt(txtQuantity.getText());
-        tmpTotal *= Integer.parseInt(tblViewItem.getModel().getValueAt(SelectedRow, 1).toString());
-        labelTotal.setText(String.format("Rp. "+"%,.0f", tmpTotal));
+        if (Integer.parseInt(txtQuantity.getText()) <= Integer.parseInt(txtStock.getText())) {
+            double tmpTotal = Integer.parseInt(txtQuantity.getText());
+            tmpTotal *= Integer.parseInt(tblViewItem.getModel().getValueAt(SelectedRow, 1).toString());
+            labelTotal.setText(String.format("Rp. " + "%,.0f", tmpTotal));
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Stock tidak memadai");
+        }
     }//GEN-LAST:event_btnKonfirmasiActionPerformed
 
     private void tblViewItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblViewItemMouseClicked
         DefaultTableModel model = (DefaultTableModel) tblViewItem.getModel();
         SelectedRow = tblViewItem.getSelectedRow();
         txtNamaBarang.setText(tblViewItem.getModel().getValueAt(SelectedRow, 0).toString());
-        String tmpPrice = String.format("Rp. "+"%,.0f", Double.parseDouble(tblViewItem.getModel().getValueAt(SelectedRow, 1).toString()));
+        String tmpPrice = String.format("Rp. " + "%,.0f", Double.parseDouble(tblViewItem.getModel().getValueAt(SelectedRow, 1).toString()));
         txtHargaBarang.setText(tmpPrice);
         txtStock.setText(tblViewItem.getModel().getValueAt(SelectedRow, 2).toString());
     }//GEN-LAST:event_tblViewItemMouseClicked
