@@ -19,8 +19,6 @@ import tools.Koneksi;
  * @author MangUjang
  */
 public class TransactionController {
-    public TransactionController(Koneksi konseksi){
-    }
     public ArrayList<Transaction> getAll() throws SQLException{
         ArrayList<Transaction> transactions = new ArrayList<>();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();

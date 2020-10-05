@@ -1,6 +1,8 @@
 package views;
 
 
+import controllers.ItemController;
+import controllers.SupplierController;
 import java.sql.PreparedStatement;
 import tools.Koneksi;
 import java.sql.ResultSet;
@@ -8,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Item;
+import models.Supplier;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,7 +25,8 @@ import javax.swing.table.DefaultTableModel;
 public class InventoryPage extends javax.swing.JFrame {
 
     private DefaultTableModel model;
-    private ArrayList<String> suppliers = new ArrayList<>();
+    private ItemController itemController = new ItemController();
+    private SupplierController supplierController = new SupplierController();
 
     /**
      * Creates new form InventoryPage
@@ -46,28 +51,11 @@ public class InventoryPage extends javax.swing.JFrame {
         model.fireTableDataChanged();
 
         try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM item";
-            ResultSet res = stat.executeQuery(sql);
-            while (res.next()) {
-                Object[] obj = new Object[5];
-                obj[0] = res.getString("ID");
-                obj[1] = res.getString("Nama");
-                obj[2] = res.getString("Price");
-                obj[3] = res.getString("Stock");
-                obj[4] = res.getString("Supplier_ID");
-
-                model.addRow(obj);
+            for (Item item : itemController.getAll()) {
+                model.addRow(new Object[]{item.getId(), item.getNama(), item.getPrice(), item.getStock(), item.getSupplier()});
             }
-            sql = "SELECT * FROM SUPPLIER";
-            res = stat.executeQuery(sql);
-            while (res.next()) {
-                Object[] obj = new Object[3];
-                obj[0] = res.getString("ID");
-                obj[1] = res.getString("Nama");
-                obj[2] = res.getString("JoinDate");
-//                suppliers.add(obj[0].toString());
-                cbSupplier.addItem(obj[0].toString() + " " +obj[1].toString());
+            for (Supplier supplier : supplierController.getAll()) {
+                cbSupplier.addItem(supplier.getId() +" "+supplier.getNama());
             }
 
         } catch (Exception e) {
@@ -296,9 +284,7 @@ public class InventoryPage extends javax.swing.JFrame {
        DefaultTableModel model = (DefaultTableModel) tblItem.getModel();
         //Ambil baris
         try{
-            PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM item WHERE Id = ?");
-            stat.setString(1, txtId.getText());
-            stat.executeUpdate();
+            itemController.delete(txtId.getText());
             getData();
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e);
@@ -308,13 +294,8 @@ public class InventoryPage extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
             String supp = cbSupplier.getSelectedItem().toString();
-            PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
-            stat.setString(1, txtId.getText());
-            stat.setString(2, txtNama.getText());
-            stat.setInt(3, Integer.parseInt(txtPrice.getText()));
-            stat.setInt(4, Integer.parseInt(txtStock.getText()));
-            stat.setString(5, supp.substring(0, supp.indexOf(' ')));
-            stat.executeUpdate();
+            supp = supp.substring(0, supp.indexOf(' '));
+            itemController.add(txtId.getText(), txtNama.getText(), Integer.parseInt(txtPrice.getText()), Integer.parseInt(txtStock.getText()), supp);
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
           } catch (Exception e) {
@@ -325,13 +306,8 @@ public class InventoryPage extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         try {
             String supp = cbSupplier.getSelectedItem().toString();
-            PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE item SET Nama=?, Price=?, Stock=?, Supplier_Id=? WHERE Id=?");
-            stat.setString(5, txtId.getText());
-            stat.setString(1, txtNama.getText());
-            stat.setInt(2, Integer.parseInt(txtPrice.getText()));
-            stat.setInt(3, Integer.parseInt(txtStock.getText()));
-            stat.setString(4, supp.substring(0, supp.indexOf(' ')));
-            stat.executeUpdate();
+            supp = supp.substring(0, supp.indexOf(' '));
+            itemController.update(txtId.getText(), txtNama.getText(), Integer.parseInt(txtPrice.getText()), Integer.parseInt(txtStock.getText()), supp);
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
           } catch (Exception e) {

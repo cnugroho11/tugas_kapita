@@ -1,33 +1,40 @@
 package views;
 
-
+import controllers.ItemController;
+import controllers.TransactionController;
+import controllers.TransactionItemController;
 import java.sql.PreparedStatement;
 import tools.Koneksi;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Item;
+import models.Transaction;
+import models.TransactionItem;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author cnugr
  */
 public class TransactionPage extends javax.swing.JFrame {
-    
+
     private DefaultTableModel model;
+    private ItemController itemController = new ItemController();
+    private TransactionItemController transactionItemController = new TransactionItemController();
+    private TransactionController transactionController = new TransactionController();
 
     /**
      * Creates new form TransactionPage
      */
     public TransactionPage() {
         initComponents();
-        
+
         model = new DefaultTableModel();
         tblTransaction.setModel(model);
 
@@ -35,43 +42,24 @@ public class TransactionPage extends javax.swing.JFrame {
         model.addColumn("Quantity");
         model.addColumn("Transaction_ID");
         model.addColumn("Item_ID");
-        
+
         getData();
     }
-    
-    public void getData(){
+
+    public void getData() {
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
 
         try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM transaction_item";
-            ResultSet res = stat.executeQuery(sql);
-            while(res.next ()){
-                Object[ ] obj = new Object[4];
-                obj[0] = res.getString("ID");
-                obj[1] = res.getString("Quantity");
-                obj[2] = res.getString("Transaction_ID");
-                obj[3] = res.getString("Item_ID");
-
-                model.addRow(obj);
+            for (TransactionItem trans : transactionItemController.getAll()) {
+                model.addRow(new Object[]{trans.getId(), trans.getQuantity(), trans.getTransaction(), trans.getItem()});
             }
-            sql = "SELECT * FROM transaction";
-            res = stat.executeQuery(sql);
-            while(res.next ()){
-                Object[ ] obj = new Object[4];
-                obj[0] = res.getString("ID");
-                cbTransaksi.addItem(obj[0].toString());
+            for (Item item : itemController.getAll()) {
+                cbItem.addItem(item.getId() + " " + item.getNama());
             }
-            sql = "SELECT * FROM item";
-            res = stat.executeQuery(sql);
-            while(res.next ()){
-                Object[ ] obj = new Object[4];
-                obj[0] = res.getString("ID");
-                obj[1] = res.getString("Nama");
-                cbItem.addItem(obj[0].toString()+" "+obj[1].toString());
+            for (Transaction transa : transactionController.getAll()) {
+                cbTransaksi.addItem(transa.getId());
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
@@ -122,9 +110,9 @@ public class TransactionPage extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblTransaction);
 
         btnAdd.setText("Add");
-        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAddMouseClicked(evt);
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
             }
         });
 
@@ -276,51 +264,41 @@ public class TransactionPage extends javax.swing.JFrame {
         cbItem.setSelectedItem(tblTransaction.getValueAt(tblTransaction.getSelectedRow(), 3).toString());
     }//GEN-LAST:event_tblTransactionMouseClicked
 
-    private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
-        try {
-            String itm = cbItem.getSelectedItem().toString();
-            PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO transaction_item VALUES (?,?,?,?)");
-            stat.setInt(1, Integer.parseInt(txtId.getText()));
-            stat.setInt(2, Integer.parseInt(txtQuantity.getText()));
-            stat.setInt(3, Integer.parseInt(cbTransaksi.getSelectedItem().toString()));
-            stat.setString(4, itm.substring(0, itm.indexOf(' ')));
-            stat.executeUpdate();
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-
-    }//GEN-LAST:event_btnAddMouseClicked
-
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         try {
             String itm = cbItem.getSelectedItem().toString();
-            PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE transaction_item SET Quantity=?, Transaction_Id=?, Item_Id=? WHERE Id=?");
-            stat.setInt(4, Integer.parseInt(txtId.getText()));
-            stat.setInt(1, Integer.parseInt(txtQuantity.getText()));
-            stat.setInt(2, Integer.parseInt(cbTransaksi.getSelectedItem().toString()));
-            stat.setString(3, itm.substring(0, itm.indexOf(' ')));
-            stat.executeUpdate();
+            itm = itm.substring(0, itm.indexOf(' '));
+            transactionItemController.update(Integer.parseInt(txtId.getText()), Integer.parseInt(txtQuantity.getText()), cbTransaksi.getSelectedItem().toString(), cbItem.getSelectedItem().toString());
+            getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-         }
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         DefaultTableModel model = (DefaultTableModel) tblTransaction.getModel();
         //Ambil baris
-        try{
-            PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM transaction_item WHERE Id = ?");
-            stat.setString(1, txtId.getText());
-            stat.executeUpdate();
+        try {
+            transactionItemController.delete(txtId.getText());
             getData();
             //System.out.println(sql);
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null,e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        try {
+            String itm = cbItem.getSelectedItem().toString();
+            itm = itm.substring(0, itm.indexOf(' '));
+            transactionItemController.add(Integer.parseInt(txtId.getText()), Integer.parseInt(txtQuantity.getText()), cbTransaksi.getSelectedItem().toString(), cbItem.getSelectedItem().toString());
+            getData();
+//            JOptionPane.showMessageDialog(null, "Update Berhasil");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
 //>>>>>>> 27e9a1d4d7653765e951bd97e3779c95805e607f
 
     /**

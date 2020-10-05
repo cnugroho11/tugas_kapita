@@ -1,5 +1,7 @@
 package views;
 
+import controllers.SupplierController;
+import models.Supplier;
 import java.sql.PreparedStatement;
 import tools.Koneksi;
 import java.sql.ResultSet;
@@ -19,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class SupplierListPage extends javax.swing.JFrame {
 
     private DefaultTableModel model;
+    private SupplierController supplierController = new SupplierController();
 
     /**
      * Creates new form SupplierListPage
@@ -42,18 +45,9 @@ public class SupplierListPage extends javax.swing.JFrame {
         model.fireTableDataChanged();
 
         try {
-            Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-            String sql = "SELECT * FROM supplier";
-            ResultSet res = stat.executeQuery(sql);
-            while (res.next()) {
-                Object[] obj = new Object[3];
-                obj[0] = res.getString("ID");
-                obj[1] = res.getString("Nama");
-                obj[2] = res.getString("JoinDate");
-
-                model.addRow(obj);
+            for (Supplier supp : supplierController.getAll()) {
+                model.addRow(new Object[]{supp.getId(), supp.getNama(), supp.getJoinDate()});
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
@@ -241,11 +235,7 @@ public class SupplierListPage extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         try {
-            PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE supplier SET Nama=?, JoinDate=? WHERE Id=?");
-            stat.setString(3, txtId.getText());
-            stat.setString(1, txtNama.getText());
-            stat.setString(2, txtJoinDate.getText());
-            stat.executeUpdate();
+            supplierController.update(txtId.getText(), txtNama.getText(), txtJoinDate.getText());
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
         } catch (Exception e) {
@@ -257,9 +247,7 @@ public class SupplierListPage extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblSupplier.getModel();
         //Ambil baris
         try {
-            PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM supplier WHERE Id = ?");
-            stat.setString(1, txtId.getText());
-            stat.executeUpdate();
+            supplierController.delete(txtId.getText());
             getData();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -269,11 +257,7 @@ public class SupplierListPage extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
             //PreparedStatement stat = Koneksi.getKoneksi().createStatement();
-            PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO supplier VALUES (?,?,?)");
-            stat.setString(1, txtId.getText());
-            stat.setString(2, txtNama.getText());
-            stat.setString(3, txtJoinDate.getText());
-            stat.executeUpdate();
+            supplierController.add(txtId.getText(), txtNama.getText(), txtJoinDate.getText());
             getData();
 //            JOptionPane.showMessageDialog(null, "Update Berhasil");
         } catch (Exception e) {

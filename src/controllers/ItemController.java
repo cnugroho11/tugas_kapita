@@ -6,6 +6,7 @@
 package controllers;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,29 +22,31 @@ import tools.Koneksi;
  * @author USER
  */
 public class ItemController {
-    public ItemController(){
+
+    public ItemController() {
     }
-    public ArrayList<Item> getAll() throws SQLException{
+
+    public ArrayList<Item> getAll() throws SQLException {
         ArrayList<Item> items = new ArrayList<>();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
         String sql = "SELECT * FROM item";
         ResultSet res = stat.executeQuery(sql);
         while (res.next()) {
             Item item = new Item();
-            Object[] obj = new Object[5];
             item.setId(res.getString("ID"));
             item.setNama(res.getString("Nama"));
             item.setPrice(res.getInt("Price"));
-            item.setStock(res.getInt("Price"));
+            item.setStock(res.getInt("Stock"));
             item.setSupplier(res.getString("Supplier_ID"));
             items.add(item);
         }
         return items;
     }
-    public Item findById(String id) throws SQLException{
+
+    public Item findById(String id) throws SQLException {
         Item item = new Item();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        String sql = "SELECT * FROM item where ID='"+id+"'";
+        String sql = "SELECT * FROM item where ID='" + id + "'";
         ResultSet res = stat.executeQuery(sql);
         while (res.next()) {
             item.setId(res.getString("ID"));
@@ -54,19 +57,31 @@ public class ItemController {
         }
         return item;
     }
-    public void update(Item item) throws SQLException{
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        stat.executeUpdate("UPDATE item set " 
-            + "Nama='"       + item.getNama() + "', "
-            + "Price='"      + item.getPrice() + "', "
-            + "Stock='"      + item.getStock() + "',"
-            + "Supplier_Id='"      + item.getSupplier() + "'"
-            + "WHERE Id = '"+item.getId()+"'");
+
+    public void update(String id, String nama, int price, int stock, String supplier) throws SQLException {
+        PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE item SET Nama=?, Price=?, Stock=?, Supplier_Id=? WHERE Id=?");
+        stat.setString(5, id);
+        stat.setString(1, nama);
+        stat.setInt(2, price);
+        stat.setInt(3, stock);
+        stat.setString(4, supplier);
+        stat.executeUpdate();
     }
-    public void delete(String id) throws SQLException, SQLException{
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        String sql = "DELETE FROM item where Id = '"+id+"'";
-        stat.executeUpdate(sql);
+
+    public void add(String id, String nama, int price, int stock, String supplier) throws SQLException {
+        PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
+        stat.setString(1, id);
+        stat.setString(2, nama);
+        stat.setInt(3, price);
+        stat.setInt(4, stock);
+        stat.setString(5, supplier);
+        stat.executeUpdate();
     }
-    
+
+    public void delete(String id) throws SQLException, SQLException {
+        PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM item WHERE Id = ?");
+        stat.setString(1, id);
+        stat.executeUpdate();
+    }
+
 }
