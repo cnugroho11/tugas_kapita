@@ -21,9 +21,7 @@ import tools.Koneksi;
  * @author USER
  */
 public class ItemController {
-    Koneksi koneksi;
-    public ItemController(Koneksi konseksi){
-        this.koneksi = koneksi;
+    public ItemController(){
     }
     public ArrayList<Item> getAll() throws SQLException{
         ArrayList<Item> items = new ArrayList<>();
@@ -33,16 +31,11 @@ public class ItemController {
         while (res.next()) {
             Item item = new Item();
             Object[] obj = new Object[5];
-            obj[0] = res.getString("ID");
-            obj[1] = res.getString("Nama");
-            obj[2] = res.getString("Price");
-            obj[3] = res.getString("Stock");
-            obj[4] = res.getString("Supplier_ID");
-            item.setId(obj[0].toString());
-            item.setNama(obj[1].toString());
-            item.setPrice(Integer.parseInt(obj[2].toString()));
-            item.setStock(Integer.parseInt(obj[3].toString()));
-            item.setSupplier(obj[4].toString());
+            item.setId(res.getString("ID"));
+            item.setNama(res.getString("Nama"));
+            item.setPrice(res.getInt("Price"));
+            item.setStock(res.getInt("Price"));
+            item.setSupplier(res.getString("Supplier_ID"));
             items.add(item);
         }
         return items;
@@ -53,17 +46,11 @@ public class ItemController {
         String sql = "SELECT * FROM item where ID='"+id+"'";
         ResultSet res = stat.executeQuery(sql);
         while (res.next()) {
-            Object[] obj = new Object[5];
-            obj[0] = res.getString("ID");
-            obj[1] = res.getString("Nama");
-            obj[2] = res.getString("Price");
-            obj[3] = res.getString("Stock");
-            obj[4] = res.getString("Supplier_ID");
-            item.setId(obj[0].toString());
-            item.setNama(obj[1].toString());
-            item.setPrice(Integer.parseInt(obj[2].toString()));
-            item.setStock(Integer.parseInt(obj[3].toString()));
-            item.setSupplier(obj[4].toString());
+            item.setId(res.getString("ID"));
+            item.setNama(res.getString("Nama"));
+            item.setPrice(res.getInt("Price"));
+            item.setStock(res.getInt("Price"));
+            item.setSupplier(res.getString("Supplier_ID"));
         }
         return item;
     }

@@ -19,10 +19,6 @@ import tools.Koneksi;
  * @author gilang
  */
 public class SupplierController {
-    Koneksi koneksi;
-    public SupplierController(Koneksi konseksi){
-        this.koneksi = koneksi;
-    }
     public ArrayList<Supplier> getAll() throws SQLException{
         ArrayList<Supplier> suppliers = new ArrayList<>();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
@@ -30,29 +26,22 @@ public class SupplierController {
         ResultSet res = stat.executeQuery(sql);
         while(res.next ()){
             Supplier supplier = new Supplier();
-            Object[ ] obj = new Object[3];
-            obj[0] = res.getString("ID");
-            obj[1] = res.getString("Nama");
-            obj[2] = res.getString("JoinDate");
-            supplier.setId(obj[0].toString());
-            supplier.setId(obj[1].toString());
-            supplier.setJoinDate(Date.valueOf(obj[2].toString()));
+            supplier.setId(res.getString("ID"));
+            supplier.setNama(res.getString("Nama"));
+            supplier.setJoinDate(Date.valueOf(res.getString("JoinDate")));
+            suppliers.add(supplier);
         }
         return suppliers;
     }
     public Supplier findById(String id) throws SQLException{
         Supplier supplier = new Supplier();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        String sql = "SELECT * FROM supplier where ID="+id;
+        String sql = "SELECT * FROM supplier where ID='"+id+"'";
         ResultSet res = stat.executeQuery(sql);
         while(res.next ()){
-            Object[ ] obj = new Object[3];
-            obj[0] = res.getString("ID");
-            obj[1] = res.getString("Nama");
-            obj[2] = res.getString("JoinDate");
-            supplier.setId(obj[0].toString());
-            supplier.setId(obj[1].toString());
-            supplier.setJoinDate(Date.valueOf(obj[2].toString()));
+            supplier.setId(res.getString("ID"));
+            supplier.setNama(res.getString("Nama"));
+            supplier.setJoinDate(Date.valueOf(res.getString("JoinDate")));
             break;
         }
         return supplier;
