@@ -28,7 +28,7 @@ public class TransactionController {
         ResultSet res = stat.executeQuery(sql);
         while (res.next()) {
             Transaction transaction = new Transaction();
-            Object[] obj = new Object[5];
+            Object[] obj = new Object[2];
             obj[0] = res.getString("ID");
             obj[1] = res.getString("OrderDate");
             transaction.setId(obj[0].toString());

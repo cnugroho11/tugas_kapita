@@ -47,11 +47,11 @@ public class TransactionItemController {
         String sql = "SELECT * FROM transaction_item where ID='"+id+"'";
         ResultSet res = stat.executeQuery(sql);
         while (res.next()) {
-            Object[] obj = new Object[5];
+            Object[] obj = new Object[4];
             obj[0] = res.getString("ID");
             obj[1] = res.getString("Quantity");
             obj[2] = res.getString("Transaction");
-            obj[3] = res.getString("item");
+            obj[3] = res.getString("Item");
             transactionitem.setId(Integer.parseInt(obj[0].toString()));
             transactionitem.setQuantity(Integer.parseInt(obj[1].toString()));
             transactionitem.setTransaction(obj[2].toString());
