@@ -28,9 +28,9 @@ public class ItemController {
 
     public ArrayList<Item> getAll() throws SQLException {
         ArrayList<Item> items = new ArrayList<>();
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
         String sql = "SELECT * FROM item";
-        ResultSet res = stat.executeQuery(sql);
+        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(sql);
+        ResultSet res = ps.executeQuery();
         while (res.next()) {
             Item item = new Item();
             item.setId(res.getString("ID"));
@@ -45,9 +45,9 @@ public class ItemController {
 
     public Item findById(String id) throws SQLException {
         Item item = new Item();
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
         String sql = "SELECT * FROM item where ID='" + id + "'";
-        ResultSet res = stat.executeQuery(sql);
+        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(sql);
+        ResultSet res = ps.executeQuery();
         while (res.next()) {
             item.setId(res.getString("ID"));
             item.setNama(res.getString("Nama"));

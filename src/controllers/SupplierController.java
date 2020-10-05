@@ -23,9 +23,9 @@ public class SupplierController {
 
     public ArrayList<Supplier> getAll() throws SQLException {
         ArrayList<Supplier> suppliers = new ArrayList<>();
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
         String sql = "SELECT * FROM supplier";
-        ResultSet res = stat.executeQuery(sql);
+        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(sql);
+        ResultSet res = ps.executeQuery();
         while (res.next()) {
             Supplier supplier = new Supplier();
             supplier.setId(res.getString("ID"));
@@ -38,9 +38,9 @@ public class SupplierController {
 
     public Supplier findById(String id) throws SQLException {
         Supplier supplier = new Supplier();
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
         String sql = "SELECT * FROM supplier where ID='" + id + "'";
-        ResultSet res = stat.executeQuery(sql);
+        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(sql);
+        ResultSet res = ps.executeQuery();
         while (res.next()) {
             supplier.setId(res.getString("ID"));
             supplier.setNama(res.getString("Nama"));
