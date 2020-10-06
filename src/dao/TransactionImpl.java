@@ -5,15 +5,16 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import models.Transaction;
-
+import models.Transaction;
 /**
  *
  * @author USER
  */
 public interface TransactionImpl {
-    public void getAll();
-    public void findById(String id);
+    public ArrayList<Transaction> getAll();
+    public Transaction findById(String id);
     public void update(Transaction transaction);
     public void add(Transaction transaction);
     public void delete(String id);

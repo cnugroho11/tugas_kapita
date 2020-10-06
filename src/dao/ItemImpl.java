@@ -5,14 +5,17 @@
  */
 package dao;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import models.Item;
 /**
  *
  * @author USER
  */
 public interface ItemImpl {
-    public void getAll();
-    public void findById(String id);
-    public void update(String id, String nama, int price, int stock, String supplier);
-    public void add(String id, String nama, int price, int stock, String supplier);
-    public void delete(String id);
+    public ArrayList<Item> getAll() throws SQLException;
+    public Item findById(String id) throws SQLException;
+    public void update(String id, String nama, int price, int stock, String supplier) throws SQLException;
+    public void add(String id, String nama, int price, int stock, String supplier) throws SQLException;
+    public void delete(String id) throws SQLException;
 }

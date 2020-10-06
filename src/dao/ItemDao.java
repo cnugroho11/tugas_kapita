@@ -17,7 +17,7 @@ import tools.Koneksi;
  *
  * @author USER
  */
-public class ItemDao {
+public class ItemDao implements ItemImpl{
     final String GET_ALL = "SELECT * FROM item";
     final String FIND_BY_ID = "SELECT * FROM item where ID = ?";
     final String ADD = "INSERT INTO item VALUES (?,?,?,?,?)";
@@ -70,7 +70,7 @@ public class ItemDao {
         stat.executeUpdate();
     }
 
-    public void insert(String id, String nama, int price, int stock, String supplier) throws SQLException {
+    public void add(String id, String nama, int price, int stock, String supplier) throws SQLException {
         PreparedStatement stat = Koneksi.con.prepareStatement(ADD);
         stat.setString(1, id);
         stat.setString(2, nama);
@@ -85,4 +85,5 @@ public class ItemDao {
         stat.setString(1, id);
         stat.executeUpdate();
     }
+
 }

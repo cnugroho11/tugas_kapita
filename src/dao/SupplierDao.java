@@ -18,10 +18,10 @@ import tools.Koneksi;
  *
  * @author USER
  */
-public class SupplierDao {
+public class SupplierDao implements SupplierImpl{
     final String GET_ALL = "SELECT * FROM supplier";
     final String FIND_BY_ID = "SELECT * FROM supplier where ID = ?";
-    final String INSERT = "INSERT INTO supplier VALUES (?,?,?)";
+    final String ADD = "INSERT INTO supplier VALUES (?,?,?)";
     final String UPDATE = "UPDATE supplier SET Nama=?, JoinDate=? WHERE Id=?";
     final String DELETE = "DELETE FROM supplier WHERE Id = ?";
     
@@ -66,8 +66,8 @@ public class SupplierDao {
         stat.executeUpdate();
     }
 
-    public void insert(String id, String nama, String joinDate) throws SQLException {
-        PreparedStatement stat = con.prepareStatement(INSERT);
+    public void add(String id, String nama, String joinDate) throws SQLException {
+        PreparedStatement stat = con.prepareStatement(ADD);
         stat.setString(1, id);
         stat.setString(2, nama);
         stat.setString(3, joinDate);
