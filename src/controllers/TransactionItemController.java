@@ -34,6 +34,17 @@ public class TransactionItemController {
 
         refreshView();
     }
+    
+    public void caridata(){
+        try {
+            for (TransactionItem trans : transactionItemImpl.getSeacrh(view.getTxtCari().getText())) {
+                view.model.addRow(new Object[]{trans.getId(), trans.getQuantity(), trans.getTransaction(), trans.getItem()});
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void refreshView() {
         view.model.getDataVector().removeAllElements();

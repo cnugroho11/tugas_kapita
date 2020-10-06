@@ -18,4 +18,5 @@ public interface ItemImpl {
     public void update(String id, String nama, int price, int stock, String supplier) throws SQLException;
     public void add(String id, String nama, int price, int stock, String supplier) throws SQLException;
     public void delete(String id) throws SQLException;
+    public ArrayList<Item> getSearch(String id) throws SQLException;
 }

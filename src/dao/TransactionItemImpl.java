@@ -19,4 +19,5 @@ public interface TransactionItemImpl {
     public void update(int id, int quantity, String transaction, String item) throws SQLException;
     public void add(int id, int quantity, String transaction, String item) throws SQLException;
     public void delete(String id) throws SQLException;
+    public ArrayList<TransactionItem> getSeacrh(String id) throws SQLException;
 }

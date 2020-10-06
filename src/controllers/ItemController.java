@@ -67,6 +67,17 @@ public class ItemController {
         }
         refreshView();
     }
+    
+    public void caridata(){
+        try {
+            for (Item itm : itemImpl.getSearch(view.getTxtCari().getText())) {
+                view.model.addRow(new Object[]{itm.getId(), itm.getNama(), itm.getPrice(), itm.getStock(), itm.getSupplier()});
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void delete() {
         try {

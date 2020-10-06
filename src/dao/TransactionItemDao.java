@@ -20,6 +20,7 @@ import tools.Koneksi;
  */
 public class TransactionItemDao implements TransactionItemImpl{
     final String GET_ALL = "SELECT * FROM transaction_item";
+    final String GET_CARI = "SELECT * FROM transaction_item where ID=?";
     final String FIND_BY_ID = "SELECT * FROM transaction_item where ID=?";
     final String ADD = "INSERT INTO transaction_item VALUES (?,?,?,?)";
     final String UPDATE = "UPDATE transaction_item SET Quantity=?, Transaction_Id=?, Item_Id=? WHERE Id=?";
@@ -93,5 +94,28 @@ public class TransactionItemDao implements TransactionItemImpl{
         PreparedStatement stat = con.prepareStatement(DELETE);
         stat.setString(1, id);
         stat.executeUpdate();
+    }
+
+   
+
+    
+    public ArrayList<TransactionItem> getSeacrh(String id) throws SQLException {
+        ArrayList<TransactionItem> transactionitems = new ArrayList<>();
+        PreparedStatement ps = con.prepareStatement(GET_CARI);
+        ResultSet res = ps.executeQuery();
+        while (res.next()) {
+            TransactionItem transactionitem = new TransactionItem();
+            Object[] obj = new Object[5];
+            obj[0] = res.getString("ID");
+            obj[1] = res.getString("Quantity");
+            obj[2] = res.getString("Transaction_Id");
+            obj[3] = res.getString("Item_Id");
+            transactionitem.setId(Integer.parseInt(obj[0].toString()));
+            transactionitem.setQuantity(Integer.parseInt(obj[1].toString()));
+            transactionitem.setTransaction(obj[2].toString());
+            transactionitem.setItem(obj[3].toString());
+            transactionitems.add(transactionitem);
+        }
+        return transactionitems; 
     }
 }

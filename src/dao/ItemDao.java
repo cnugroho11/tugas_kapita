@@ -19,6 +19,7 @@ import tools.Koneksi;
  */
 public class ItemDao implements ItemImpl{
     final String GET_ALL = "SELECT * FROM item";
+    final String GET_CARI = "SELECT * FROM item where id = ?";
     final String FIND_BY_ID = "SELECT * FROM item where ID = ?";
     final String ADD = "INSERT INTO item VALUES (?,?,?,?,?)";
     final String UPDATE = "UPDATE item SET Nama=?, Price=?, Stock=?, Supplier_Id=? WHERE Id=?";
@@ -86,4 +87,22 @@ public class ItemDao implements ItemImpl{
         stat.executeUpdate();
     }
 
+    
+    public ArrayList<Item> getSearch(String id) throws SQLException {
+      ArrayList<Item> items = new ArrayList<>();
+        PreparedStatement ps = con.prepareStatement(GET_CARI);
+        ResultSet res = ps.executeQuery();
+        while (res.next()) {
+            Item item = new Item();
+            item.setId(res.getString("ID"));
+            item.setNama(res.getString("Nama"));
+            item.setPrice(res.getInt("Price"));
+            item.setStock(res.getInt("Stock"));
+            item.setSupplier(res.getString("Supplier_ID"));
+            items.add(item);
+        }
+        return items;
+    }
 }
+
+
