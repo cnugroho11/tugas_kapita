@@ -18,7 +18,7 @@ import tools.Koneksi;
  *
  * @author USER
  */
-public class TransactionItemDao {
+public class TransactionItemDao implements TransactionItemImpl{
     final String GET_ALL = "SELECT * FROM transaction_item";
     final String FIND_BY_ID = "SELECT * FROM transaction_item where ID=?";
     final String ADD = "INSERT INTO transaction_item VALUES (?,?,?,?)";
