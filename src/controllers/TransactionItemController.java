@@ -5,19 +5,47 @@
  */
 package controllers;
 
+import dao.TransactionItemDao;
+import dao.TransactionItemImpl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import models.Transaction;
 import models.TransactionItem;
 import tools.Koneksi;
+import views.TransactionPage;
 
 /**
  *
  * @author MangUjang
  */
 public class TransactionItemController {
+    
+    private TransactionPage view;
+    private TransactionItemImpl transactionItemImpl;
+    
+    public TransactionItemController(TransactionPage view) {
+        this.view = view;
+        this.transactionItemImpl = new TransactionItemDao();
+        refreshView();
+    }
+    
+    public void refreshView() {
+        view.model.getDataVector().removeAllElements();
+        view.model.fireTableDataChanged();
+        try {
+            for (TransactionItem trans : transactionItemImpl.getAll()) {
+                view.model.addRow(new Object[]{trans.getId(), trans.getQuantity(), trans.getTransaction(), trans.getItem()});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+
 
     public ArrayList<TransactionItem> getAll() throws SQLException {
         ArrayList<TransactionItem> transactionitems = new ArrayList<>();

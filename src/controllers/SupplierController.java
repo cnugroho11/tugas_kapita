@@ -25,15 +25,17 @@ import views.SupplierListPage;
  * @author gilang
  */
 public class SupplierController {
-    
+
     private SupplierListPage view;
     private SupplierImpl supplierImpl;
-    public SupplierController(SupplierListPage view){
+
+    public SupplierController(SupplierListPage view) {
         this.view = view;
         this.supplierImpl = new SupplierDao();
         refreshView();
-    }    
-    public void refreshView(){
+    }
+
+    public void refreshView() {
         view.model.getDataVector().removeAllElements();
         view.model.fireTableDataChanged();
         try {
@@ -44,14 +46,14 @@ public class SupplierController {
             e.printStackTrace();
         }
     }
-    
-    public void getTableRowData(int indexRow){
+
+    public void getTableRowData(int indexRow) {
         view.getTxtId().setText(view.getTblSupplier().getValueAt(view.getTblSupplier().getSelectedRow(), 0).toString());
         view.getTxtNama().setText(view.getTblSupplier().getValueAt(view.getTblSupplier().getSelectedRow(), 1).toString());
         view.getTxtJoinDate().setText(view.getTblSupplier().getValueAt(view.getTblSupplier().getSelectedRow(), 2).toString());
     }
-    
-    public void insert(){
+
+    public void insert() {
         try {
             supplierImpl.add(view.getTxtId().getText(), view.getTxtNama().getText(), view.getTxtJoinDate().getText());
         } catch (SQLException ex) {
@@ -59,8 +61,8 @@ public class SupplierController {
         }
         refreshView();
     }
-    
-    public void delete(){
+
+    public void delete() {
         try {
             supplierImpl.delete(view.getTxtId().getText());
         } catch (SQLException ex) {
@@ -68,8 +70,8 @@ public class SupplierController {
         }
         refreshView();
     }
-    
-    public void update(){
+
+    public void update() {
         try {
             supplierImpl.update(view.getTxtId().getText(), view.getTxtNama().getText(), view.getTxtJoinDate().getText());
             refreshView();

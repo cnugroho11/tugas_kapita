@@ -24,46 +24,26 @@ import models.TransactionItem;
  */
 public class TransactionPage extends javax.swing.JFrame {
 
-    private DefaultTableModel model;
-    private ItemController itemController = new ItemController();
-    private TransactionItemController transactionItemController = new TransactionItemController();
-    private TransactionController transactionController = new TransactionController();
+    public DefaultTableModel model;
+    private TransactionItemController transactionItemController;
+
 
     /**
      * Creates new form TransactionPage
      */
     public TransactionPage() {
         initComponents();
-
         model = new DefaultTableModel();
         tblTransaction.setModel(model);
-
         model.addColumn("ID");
         model.addColumn("Quantity");
         model.addColumn("Transaction_ID");
         model.addColumn("Item");
-
-        getData();
+        transactionItemController = new TransactionItemController(this);
     }
 
     public void getData() {
-        model.getDataVector().removeAllElements();
-        model.fireTableDataChanged();
-
-        try {
-            for (TransactionItem trans : transactionItemController.getAll()) {
-                Item i = itemController.findById(trans.getItem());
-                model.addRow(new Object[]{trans.getId(), trans.getQuantity(), trans.getTransaction(), trans.getItem()+" "+i.getNama()});
-            }
-            for (Item item : itemController.getAll()) {
-                cbItem.addItem(item.getId() + " " + item.getNama());
-            }
-            for (Transaction transa : transactionController.getAll()) {
-                cbTransaksi.addItem(transa.getId());
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
+        
     }
 
     /**

@@ -5,17 +5,22 @@
  */
 package controllers;
 
+import dao.ItemDao;
+import dao.ItemImpl;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Item;
 import models.Supplier;
 import tools.Koneksi;
+import views.InventoryPage;
 
 /**
  *
@@ -23,65 +28,62 @@ import tools.Koneksi;
  */
 public class ItemController {
 
-    public ItemController() {
+    private InventoryPage view;
+    private ItemImpl itemImpl;
+
+    public ItemController(InventoryPage view) {
+        this.view = view;
+        this.itemImpl = new ItemDao();
+        refreshView();
     }
 
-    public ArrayList<Item> getAll() throws SQLException {
-        ArrayList<Item> items = new ArrayList<>();
-        String query = "SELECT * FROM item";
-        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(query);
-        ResultSet res = ps.executeQuery();
-        while (res.next()) {
-            Item item = new Item();
-            item.setId(res.getString("ID"));
-            item.setNama(res.getString("Nama"));
-            item.setPrice(res.getInt("Price"));
-            item.setStock(res.getInt("Stock"));
-            item.setSupplier(res.getString("Supplier_ID"));
-            items.add(item);
+    public void refreshView() {
+        view.model.getDataVector().removeAllElements();
+        view.model.fireTableDataChanged();
+
+        try {
+            for (Item itm : itemImpl.getAll()) {
+                view.model.addRow(new Object[]{itm.getId(), itm.getNama(), itm.getPrice(), itm.getStock(), itm.getSupplier()});
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return items;
     }
 
-    public Item findById(String id) throws SQLException {
-        Item item = new Item();
-        String sql = "SELECT * FROM item where ID='" + id + "'";
-        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(sql);
-        ResultSet res = ps.executeQuery();
-        while (res.next()) {
-            item.setId(res.getString("ID"));
-            item.setNama(res.getString("Nama"));
-            item.setPrice(res.getInt("Price"));
-            item.setStock(res.getInt("Price"));
-            item.setSupplier(res.getString("Supplier_ID"));
+    public void getTableRowData(int indexRow) {
+        view.getTxtId().setText(view.getTblItem().getValueAt(view.getTblItem().getSelectedRow(), 0).toString());
+        view.getTxtNama().setText(view.getTblItem().getValueAt(view.getTblItem().getSelectedRow(), 1).toString());
+        view.getTxtPrice().setText(view.getTblItem().getValueAt(view.getTblItem().getSelectedRow(), 2).toString());
+        view.getTxtStock().setText(view.getTblItem().getValueAt(view.getTblItem().getSelectedRow(), 3).toString());
+        view.getCbSupplier().setSelectedItem(view.getTblItem().getValueAt(view.getTblItem().getSelectedRow(), 4).toString());
+    }
+
+    public void insert() {
+        try {
+            itemImpl.add(view.getTxtId().getText(), view.getTxtNama().getText(), Integer.parseInt(view.getTxtPrice().getText()), Integer.parseInt(view.getTxtStock().getText()), view.getCbSupplier().getSelectedItem().toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return item;
-    }
-    
-    public void update(String id, String nama, int price, int stock, String supplier) throws SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("UPDATE item SET Nama=?, Price=?, Stock=?, Supplier_Id=? WHERE Id=?");
-        query.setString(5, id);
-        query.setString(1, nama);
-        query.setInt(2, price);
-        query.setInt(3, stock);
-        query.setString(4, supplier);
-        query.executeUpdate();
+        refreshView();
     }
 
-    public void add(String id, String nama, int price, int stock, String supplier) throws SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
-        query.setString(1, id);
-        query.setString(2, nama);
-        query.setInt(3, price);
-        query.setInt(4, stock);
-        query.setString(5, supplier);
-        query.executeUpdate();
+    public void delete() {
+        try {
+            itemImpl.delete(view.getTxtId().getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        refreshView();
     }
 
-    public void delete(String id) throws SQLException, SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("DELETE FROM item WHERE Id = ?");
-        query.setString(1, id);
-        query.executeUpdate();
+    public void update() {
+        try {
+            itemImpl.update(view.getTxtId().getText(), view.getTxtNama().getText(), Integer.parseInt(view.getTxtPrice().getText().toString()), Integer.parseInt(view.getTxtStock().getText().toString()), view.getCbSupplier().toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.refreshView();
     }
 
 }

@@ -6,6 +6,8 @@
 
 package controllers;
 
+import dao.TransactionDao;
+import dao.TransactionImpl;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +15,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import models.Transaction;
 import tools.Koneksi;
+import views.TransactionPage;
 
 /**
  *
  * @author MangUjang
  */
 public class TransactionController {
+    
+    private TransactionPage view;
+    private TransactionImpl transactionImpl;
+    
+    public TranscationController(TransactionPage view){
+        this.view = view;
+        this.transactionImpl = new TransactionDao();
+    }
+    
     public ArrayList<Transaction> getAll() throws SQLException{
         ArrayList<Transaction> transactions = new ArrayList<>();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();

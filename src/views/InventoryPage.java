@@ -1,6 +1,5 @@
 package views;
 
-
 import controllers.ItemController;
 import controllers.SupplierController;
 import java.sql.PreparedStatement;
@@ -11,7 +10,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import models.Item;
 import models.Supplier;
@@ -27,9 +29,9 @@ import models.Supplier;
  */
 public class InventoryPage extends javax.swing.JFrame {
 
-    private DefaultTableModel model;
-    private ItemController itemController = new ItemController();
-    private SupplierController supplierController = new SupplierController();
+    public DefaultTableModel model;
+    private ItemController itemController;
+
     /**
      * Creates new form InventoryPage
      */
@@ -43,26 +45,50 @@ public class InventoryPage extends javax.swing.JFrame {
         model.addColumn("Price");
         model.addColumn("Stock");
         model.addColumn("Supplier");
-
+        itemController = new ItemController(this);
         getData();
     }
 
+    public JTable getTblItem() {
+        return tblItem;
+    }
+
+    public JTextField getTxtId() {
+        return txtId;
+    }
+
+    public JTextField getTxtNama() {
+        return txtNama;
+    }
+
+    public JTextField getTxtPrice() {
+        return txtPrice;
+    }
+
+    public JTextField getTxtStock() {
+        return txtStock;
+    }
+
+    public JComboBox getCbSupplier() {
+        return cbSupplier;
+    }
+
     public void getData() {
-        model.getDataVector().removeAllElements();
-        model.fireTableDataChanged();
-
-        try {
-            for (Item item : itemController.getAll()) {
-                Supplier s = supplierController.findById(item.getSupplier());
-                model.addRow(new Object[]{item.getId(), item.getNama(), item.getPrice(), item.getStock(), item.getSupplier()+" "+s.getNama()});
-            }
-            for (Supplier supplier : supplierController.getAll()) {
-                cbSupplier.addItem(supplier.getId() +" "+supplier.getNama());
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
+//        model.getDataVector().removeAllElements();
+//        model.fireTableDataChanged();
+//
+//        try {
+//            for (Item item : itemController.getAll()) {
+//                Supplier s = supplierController.findById(item.getSupplier());
+//                model.addRow(new Object[]{item.getId(), item.getNama(), item.getPrice(), item.getStock(), item.getSupplier()+" "+s.getNama()});
+//            }
+//            for (Supplier supplier : supplierController.getAll()) {
+//                cbSupplier.addItem(supplier.getId() +" "+supplier.getNama());
+//            }
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, e);
+//        }
     }
 
     /**
@@ -274,50 +300,19 @@ public class InventoryPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void tblItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblItemMouseClicked
-            // TODO add your handling code here:
-//            String idSupplier = tblItem.getValueAt(tblItem.getSelectedRow(), 4).toString();
-//            Supplier s = supplierController.findById(idSupplier);
-            txtId.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 0).toString());
-            txtNama.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 1).toString());
-            txtPrice.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 2).toString());
-            txtStock.setText(tblItem.getValueAt(tblItem.getSelectedRow(), 3).toString());
-            cbSupplier.setSelectedItem(tblItem.getValueAt(tblItem.getSelectedRow(), 4).toString());
-        
+        itemController.getTableRowData(tblItem.getSelectedRow());
     }//GEN-LAST:event_tblItemMouseClicked
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-       DefaultTableModel model = (DefaultTableModel) tblItem.getModel();
-        //Ambil baris
-        try{
-            itemController.delete(txtId.getText());
-            getData();
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null,e);
-        }
+        itemController.delete();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        try {
-            String supp = cbSupplier.getSelectedItem().toString();
-            supp = supp.substring(0, supp.indexOf(' '));
-            itemController.add(txtId.getText(), txtNama.getText(), Integer.parseInt(txtPrice.getText()), Integer.parseInt(txtStock.getText()), supp);
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
+        itemController.insert();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        try {
-            String supp = cbSupplier.getSelectedItem().toString();
-            supp = supp.substring(0, supp.indexOf(' '));
-            itemController.update(txtId.getText(), txtNama.getText(), Integer.parseInt(txtPrice.getText()), Integer.parseInt(txtStock.getText()), supp);
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-          } catch (Exception e) {
-            e.printStackTrace();
-         }
+        itemController.insert();
     }//GEN-LAST:event_btnEditActionPerformed
 
     /**

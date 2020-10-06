@@ -18,19 +18,20 @@ import tools.Koneksi;
  *
  * @author USER
  */
-public class SupplierDao implements SupplierImpl{
+public class SupplierDao implements SupplierImpl {
+
     final String GET_ALL = "SELECT * FROM supplier";
     final String FIND_BY_ID = "SELECT * FROM supplier where ID = ?";
     final String ADD = "INSERT INTO supplier VALUES (?,?,?)";
     final String UPDATE = "UPDATE supplier SET Nama=?, JoinDate=? WHERE Id=?";
     final String DELETE = "DELETE FROM supplier WHERE Id = ?";
-    
+
     private Connection con;
-    
-    public SupplierDao(){
+
+    public SupplierDao() {
         this.con = Koneksi.getKoneksi();
     }
-    
+
     public ArrayList<Supplier> getAll() throws SQLException {
         ArrayList<Supplier> suppliers = new ArrayList<>();
         PreparedStatement ps = con.prepareStatement(GET_ALL);
