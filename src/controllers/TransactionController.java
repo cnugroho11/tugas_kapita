@@ -22,8 +22,8 @@ public class TransactionController {
     public ArrayList<Transaction> getAll() throws SQLException{
         ArrayList<Transaction> transactions = new ArrayList<>();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        String sql = "SELECT * FROM transaction";
-        ResultSet res = stat.executeQuery(sql);
+        String query = "SELECT * FROM transaction";
+        ResultSet res = stat.executeQuery(query);
         while (res.next()) {
             Transaction transaction = new Transaction();
             Object[] obj = new Object[2];
@@ -39,8 +39,8 @@ public class TransactionController {
     public Transaction findById(String id) throws SQLException{
         Transaction transaction = new Transaction();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        String sql = "SELECT * FROM transaction where id="+id;
-        ResultSet res = stat.executeQuery(sql);
+        String query = "SELECT * FROM transaction where id="+id;
+        ResultSet res = stat.executeQuery(query);
         while(res.next ()){
             Object[ ] obj = new Object[3];
             obj[0] = res.getString("ID");
@@ -53,15 +53,15 @@ public class TransactionController {
     }
     
      public void update(Transaction transaction) throws SQLException{
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        stat.executeUpdate("UPDATE transaction set " 
+        Statement query = (Statement) Koneksi.getKoneksi().createStatement();
+        query.executeUpdate("UPDATE transaction set " 
             + "OrderDate='"      + transaction.getOrderDate() + "'"
             + "WHERE Id = '"+transaction.getId()+"'");
     }
     public void delete(String id) throws SQLException, SQLException{
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
+        Statement query = (Statement) Koneksi.getKoneksi().createStatement();
         String sql = "DELETE FROM transaction where Id = '"+id+"'";
-        stat.executeUpdate(sql);
+        query.executeUpdate(sql);
     }
     
 }

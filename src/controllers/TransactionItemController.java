@@ -22,8 +22,8 @@ public class TransactionItemController {
     public ArrayList<TransactionItem> getAll() throws SQLException {
         ArrayList<TransactionItem> transactionitems = new ArrayList<>();
         Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        String sql = "SELECT * FROM transaction_item";
-        ResultSet res = stat.executeQuery(sql);
+        String query = "SELECT * FROM transaction_item";
+        ResultSet res = stat.executeQuery(query);
         while (res.next()) {
             TransactionItem transactionitem = new TransactionItem();
             Object[] obj = new Object[5];
@@ -42,9 +42,9 @@ public class TransactionItemController {
 
     public TransactionItem findById(String id) throws SQLException {
         TransactionItem transactionitem = new TransactionItem();
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
+        Statement query = (Statement) Koneksi.getKoneksi().createStatement();
         String sql = "SELECT * FROM transaction_item where ID='" + id + "'";
-        ResultSet res = stat.executeQuery(sql);
+        ResultSet res = query.executeQuery(sql);
         while (res.next()) {
             Object[] obj = new Object[4];
             obj[0] = res.getString("ID");
@@ -61,26 +61,26 @@ public class TransactionItemController {
     }
 
     public void update(int id, int quantity, String transaction, String item) throws SQLException {
-        PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE transaction_item SET Quantity=?, Transaction_Id=?, Item_Id=? WHERE Id=?");
-        stat.setInt(4, id);
-        stat.setInt(1, quantity);
-        stat.setString(2, transaction);
-        stat.setString(3, item);
-        stat.executeUpdate();
+        PreparedStatement query = Koneksi.con.prepareStatement("UPDATE transaction_item SET Quantity=?, Transaction_Id=?, Item_Id=? WHERE Id=?");
+        query.setInt(4, id);
+        query.setInt(1, quantity);
+        query.setString(2, transaction);
+        query.setString(3, item);
+        query.executeUpdate();
     }
 
     public void add(int id, int quantity, String transaction, String item) throws SQLException {
-        PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO transaction_item VALUES (?,?,?,?)");
-        stat.setInt(1, id);
-        stat.setInt(2, quantity);
-        stat.setString(3, transaction);
-        stat.setString(4, item);
-        stat.executeUpdate();
+        PreparedStatement query = Koneksi.con.prepareStatement("INSERT INTO transaction_item VALUES (?,?,?,?)");
+        query.setInt(1, id);
+        query.setInt(2, quantity);
+        query.setString(3, transaction);
+        query.setString(4, item);
+        query.executeUpdate();
     }
 
     public void delete(String id) throws SQLException, SQLException {
-        PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM transaction_item WHERE Id = ?");
-        stat.setString(1, id);
-        stat.executeUpdate();
+        PreparedStatement query = Koneksi.con.prepareStatement("DELETE FROM transaction_item WHERE Id = ?");
+        query.setString(1, id);
+        query.executeUpdate();
     }
 }
