@@ -5,6 +5,8 @@
  */
 package dao;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import models.TransactionItem;
 
 /**
@@ -12,9 +14,9 @@ import models.TransactionItem;
  * @author USER
  */
 public interface TransactionItemImpl {
-    public void getAll();
-    public void findById(String id);
-    public void update(int id, int quantity, String transaction, String item);
-    public void add(int id, int quantity, String transaction, String item);
-    public void delete(String id);
+    public ArrayList<TransactionItem> getAll() throws SQLException;
+    public TransactionItem findById(String id) throws SQLException;
+    public void update(int id, int quantity, String transaction, String item) throws SQLException;
+    public void add(int id, int quantity, String transaction, String item) throws SQLException;
+    public void delete(String id) throws SQLException;
 }
