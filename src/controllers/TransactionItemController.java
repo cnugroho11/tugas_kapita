@@ -5,6 +5,10 @@
  */
 package controllers;
 
+import dao.ItemDao;
+import dao.ItemImpl;
+import dao.TransactionDao;
+import dao.TransactionImpl;
 import dao.TransactionItemDao;
 import dao.TransactionItemImpl;
 import java.sql.PreparedStatement;
@@ -14,6 +18,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Item;
 import models.Transaction;
 import models.TransactionItem;
 import tools.Koneksi;
@@ -27,11 +32,14 @@ public class TransactionItemController {
 
     private TransactionPage view;
     private TransactionItemImpl transactionItemImpl;
+    private TransactionImpl transactionImpl;
+    private ItemImpl itemImpl;
 
     public TransactionItemController(TransactionPage view) {
         this.view = view;
         this.transactionItemImpl = new TransactionItemDao();
-
+        this.transactionImpl = new TransactionDao();
+        this.itemImpl = new ItemDao();
         refreshView();
     }
     
@@ -53,6 +61,12 @@ public class TransactionItemController {
             for (TransactionItem trans : transactionItemImpl.getAll()) {
                 view.model.addRow(new Object[]{trans.getId(), trans.getQuantity(), trans.getTransaction(), trans.getItem()});
             }
+            for (Transaction trans : transactionImpl.getAll()){
+                view.getCbBoxTransaction().addItem(trans.getId());
+            }
+            for (Item itm : itemImpl.getAll()) {
+                view.getCbBoxItem().addItem(itm.getId());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +76,7 @@ public class TransactionItemController {
         view.getTxtId().setText(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 0).toString());
         view.getTxtQuantity().setText(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 1).toString());
         view.getCbBoxTransaction().setSelectedItem(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 2).toString());
-        view.getCbBoxItem().setSelectedItem(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 2).toString());
+        view.getCbBoxItem().setSelectedItem(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 3).toString());
     }
 
     public void insert() {
