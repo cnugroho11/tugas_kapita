@@ -4,16 +4,21 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/ReportPage.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/models/TransactionItem.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/controllers/TransactionItemController.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/models/Transaction.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/controllers/ItemController.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/LoginPage.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/MainPageUser.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/TransactionPage.java</file>
             <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/InventoryPage.java</file>
             <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/MainPage.java</file>
             <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/tools/Koneksi.java</file>
             <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/SupplierListPage.java</file>
-            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/LoginPage.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/controllers/TransactionController.java</file>
             <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/controllers/SupplierController.java</file>
-            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/MainPageUser.java</file>
             <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/models/Supplier.java</file>
-            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/TransactionPage.java</file>
-            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/views/SupplierEditPage.java</file>
+            <file>file:/C:/Users/cnugr/Documents/NetBeansProjects/tugas_kapita/src/models/Item.java</file>
         </group>
     </open-files>
 </project-private>

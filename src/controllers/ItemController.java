@@ -28,8 +28,8 @@ public class ItemController {
 
     public ArrayList<Item> getAll() throws SQLException {
         ArrayList<Item> items = new ArrayList<>();
-        String sql = "SELECT * FROM item";
-        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(sql);
+        String query = "SELECT * FROM item";
+        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(query);
         ResultSet res = ps.executeQuery();
         while (res.next()) {
             Item item = new Item();
@@ -57,31 +57,31 @@ public class ItemController {
         }
         return item;
     }
-
+    
     public void update(String id, String nama, int price, int stock, String supplier) throws SQLException {
-        PreparedStatement stat = Koneksi.con.prepareStatement("UPDATE item SET Nama=?, Price=?, Stock=?, Supplier_Id=? WHERE Id=?");
-        stat.setString(5, id);
-        stat.setString(1, nama);
-        stat.setInt(2, price);
-        stat.setInt(3, stock);
-        stat.setString(4, supplier);
-        stat.executeUpdate();
+        PreparedStatement query = Koneksi.con.prepareStatement("UPDATE item SET Nama=?, Price=?, Stock=?, Supplier_Id=? WHERE Id=?");
+        query.setString(5, id);
+        query.setString(1, nama);
+        query.setInt(2, price);
+        query.setInt(3, stock);
+        query.setString(4, supplier);
+        query.executeUpdate();
     }
 
     public void add(String id, String nama, int price, int stock, String supplier) throws SQLException {
-        PreparedStatement stat = Koneksi.con.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
-        stat.setString(1, id);
-        stat.setString(2, nama);
-        stat.setInt(3, price);
-        stat.setInt(4, stock);
-        stat.setString(5, supplier);
-        stat.executeUpdate();
+        PreparedStatement query = Koneksi.con.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
+        query.setString(1, id);
+        query.setString(2, nama);
+        query.setInt(3, price);
+        query.setInt(4, stock);
+        query.setString(5, supplier);
+        query.executeUpdate();
     }
 
     public void delete(String id) throws SQLException, SQLException {
-        PreparedStatement stat = Koneksi.con.prepareStatement("DELETE FROM item WHERE Id = ?");
-        stat.setString(1, id);
-        stat.executeUpdate();
+        PreparedStatement query = Koneksi.con.prepareStatement("DELETE FROM item WHERE Id = ?");
+        query.setString(1, id);
+        query.executeUpdate();
     }
 
 }

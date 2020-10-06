@@ -97,6 +97,8 @@ public class LoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        //enkripsi bcrypt
+        //java mail
         if (txtUsername.getText().equals("admin") && txtPassword.getText().equals("admin")) {
             this.dispose();
             JOptionPane.showMessageDialog(this, "Berhasil login admin");
