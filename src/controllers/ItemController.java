@@ -7,6 +7,8 @@ package controllers;
 
 import dao.ItemDao;
 import dao.ItemImpl;
+import dao.SupplierDao;
+import dao.SupplierImpl;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +23,7 @@ import models.Item;
 import models.Supplier;
 import tools.Koneksi;
 import views.InventoryPage;
+import views.SupplierListPage;
 
 /**
  *
@@ -30,10 +33,12 @@ public class ItemController {
 
     private InventoryPage view;
     private ItemImpl itemImpl;
+    private SupplierImpl supplierImpl;
 
     public ItemController(InventoryPage view) {
         this.view = view;
         this.itemImpl = new ItemDao();
+        this.supplierImpl = new SupplierDao();
         refreshView();
     }
 
@@ -44,7 +49,9 @@ public class ItemController {
         try {
             for (Item itm : itemImpl.getAll()) {
                 view.model.addRow(new Object[]{itm.getId(), itm.getNama(), itm.getPrice(), itm.getStock(), itm.getSupplier()});
-
+            }
+            for (Supplier supplier : supplierImpl.getAll()) {
+                view.getCbSupplier().addItem(supplier.getId()+" "+supplier.getNama());
             }
         } catch (Exception e) {
             e.printStackTrace();
