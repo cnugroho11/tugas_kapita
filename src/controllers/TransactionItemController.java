@@ -28,7 +28,9 @@ public class TransactionItemController {
     
     public TransactionItemController(TransactionPage view) {
         this.view = view;
+        
         this.transactionItemImpl = new TransactionItemDao();
+        
         refreshView();
     }
     
