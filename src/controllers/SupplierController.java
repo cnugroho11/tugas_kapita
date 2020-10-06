@@ -5,70 +5,78 @@
  */
 package controllers;
 
+import dao.SupplierDao;
+import dao.SupplierImpl;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import models.Supplier;
 import tools.Koneksi;
+import views.SupplierListPage;
 
 /**
  *
  * @author gilang
  */
 public class SupplierController {
-
-    public ArrayList<Supplier> getAll() throws SQLException {
-        ArrayList<Supplier> suppliers = new ArrayList<>();
-        String query = "SELECT * FROM supplier";
-        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(query);
-        ResultSet res = ps.executeQuery();
-        while (res.next()) {
-            Supplier supplier = new Supplier();
-            supplier.setId(res.getString("ID"));
-            supplier.setNama(res.getString("Nama"));
-            supplier.setJoinDate(Date.valueOf(res.getString("JoinDate")));
-            suppliers.add(supplier);
+    
+    private SupplierListPage view;
+    private SupplierImpl supplierImpl;
+    public SupplierController(SupplierListPage view){
+        this.view = view;
+        this.supplierImpl = new SupplierDao();
+        refreshView();
+    }    
+    public void refreshView(){
+        view.model.getDataVector().removeAllElements();
+        view.model.fireTableDataChanged();
+        try {
+            for (Supplier supp : supplierImpl.getAll()) {
+                view.model.addRow(new Object[]{supp.getId(), supp.getNama(), supp.getJoinDate()});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return suppliers;
     }
-
-    public Supplier findById(String id) throws SQLException {
-        Supplier supplier = new Supplier();
-        String query = "SELECT * FROM supplier where ID='" + id + "'";
-        PreparedStatement ps = Koneksi.getKoneksi().prepareStatement(query);
-        ResultSet res = ps.executeQuery();
-        while (res.next()) {
-            supplier.setId(res.getString("ID"));
-            supplier.setNama(res.getString("Nama"));
-            supplier.setJoinDate(Date.valueOf(res.getString("JoinDate")));
-            break;
+    
+    public void getTableRowData(int indexRow){
+        view.getTxtId().setText(view.getTblSupplier().getValueAt(view.getTblSupplier().getSelectedRow(), 0).toString());
+        view.getTxtNama().setText(view.getTblSupplier().getValueAt(view.getTblSupplier().getSelectedRow(), 1).toString());
+        view.getTxtJoinDate().setText(view.getTblSupplier().getValueAt(view.getTblSupplier().getSelectedRow(), 2).toString());
+    }
+    
+    public void insert(){
+        try {
+            supplierImpl.add(view.getTxtId().getText(), view.getTxtNama().getText(), view.getTxtJoinDate().getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return supplier;
+        refreshView();
+    }
+    
+    public void delete(){
+        try {
+            supplierImpl.delete(view.getTxtId().getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        refreshView();
+    }
+    
+    public void update(){
+        try {
+            supplierImpl.update(view.getTxtId().getText(), view.getTxtNama().getText(), view.getTxtJoinDate().getText());
+            refreshView();
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.refreshView();
     }
 
-    public void update(String id, String nama, String joinDate) throws SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("UPDATE supplier SET Nama=?, JoinDate=? WHERE Id=?");
-        query.setString(3, id);
-        query.setString(1, nama);
-        query.setString(2, joinDate);
-        query.executeUpdate();
-    }
-
-    public void add(String id, String nama, String joinDate) throws SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("INSERT INTO supplier VALUES (?,?,?)");
-        query.setString(1, id);
-        query.setString(2, nama);
-        query.setString(3, joinDate);
-        query.executeUpdate();
-    }
-
-    public void delete(String id) throws SQLException, SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("DELETE FROM supplier WHERE Id = ?");
-        query.setString(1, id);
-        query.executeUpdate();
-    }
 }

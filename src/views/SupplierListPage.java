@@ -7,6 +7,8 @@ import tools.Koneksi;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -20,36 +22,51 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SupplierListPage extends javax.swing.JFrame {
 
-    private DefaultTableModel model;
-    private SupplierController supplierController = new SupplierController();
+    public DefaultTableModel model;
+    private SupplierController supplierController;
     /**
      * Creates new form SupplierListPage
      */
     public SupplierListPage() {
         initComponents();
-
         model = new DefaultTableModel();
         tblSupplier.setModel(model);
-
         model.addColumn("ID");
         model.addColumn("Nama");
         model.addColumn("JoinDate");
-
-        getData();
-
+        supplierController = new SupplierController(this);
     }
 
-    public void getData() {
-        model.getDataVector().removeAllElements();
-        model.fireTableDataChanged();
+    public JTable getTblSupplier() {
+        return tblSupplier;
+    }
 
-        try {
-            for (Supplier supp : supplierController.getAll()) {
-                model.addRow(new Object[]{supp.getId(), supp.getNama(), supp.getJoinDate()});
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
+    public JTextField getTxtId() {
+        return txtId;
+    }
+
+    public JTextField getTxtJoinDate() {
+        return txtJoinDate;
+    }
+
+    public JTextField getTxtNama() {
+        return txtNama;
+    }
+    
+    
+    
+
+    public void getData() {
+//        model.getDataVector().removeAllElements();
+//        model.fireTableDataChanged();
+//
+//        try {
+//            for (Supplier supp : supplierController.getAll()) {
+//                model.addRow(new Object[]{supp.getId(), supp.getNama(), supp.getJoinDate()});
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, e);
+//        }
     }
 
     /**
@@ -227,41 +244,19 @@ public class SupplierListPage extends javax.swing.JFrame {
 
     private void tblSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSupplierMouseClicked
         // TODO add your handling code here:
-        txtId.setText(tblSupplier.getValueAt(tblSupplier.getSelectedRow(), 0).toString());
-        txtNama.setText(tblSupplier.getValueAt(tblSupplier.getSelectedRow(), 1).toString());
-        txtJoinDate.setText(tblSupplier.getValueAt(tblSupplier.getSelectedRow(), 2).toString());
+        supplierController.getTableRowData(tblSupplier.getSelectedRow());
     }//GEN-LAST:event_tblSupplierMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        try {
-            supplierController.update(txtId.getText(), txtNama.getText(), txtJoinDate.getText());
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        supplierController.update();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        DefaultTableModel model = (DefaultTableModel) tblSupplier.getModel();
-        //Ambil baris
-        try {
-            supplierController.delete(txtId.getText());
-            getData();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+        supplierController.delete();;
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        try {
-            //PreparedStatement stat = Koneksi.getKoneksi().createStatement();
-            supplierController.add(txtId.getText(), txtNama.getText(), txtJoinDate.getText());
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        supplierController.insert();
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**
