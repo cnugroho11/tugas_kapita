@@ -2,6 +2,7 @@ package views;
 
 
 import javax.swing.JOptionPane;
+import org.mindrot.jbcrypt.BCrypt;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -99,12 +100,19 @@ public class LoginPage extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         //enkripsi bcrypt
         //java mail
-        if (txtUsername.getText().equals("admin") && txtPassword.getText().equals("admin")) {
+        String password = txtPassword.getText();
+        
+        String salt = BCrypt.gensalt();
+        String hash = BCrypt.hashpw(password, salt);
+        
+        System.out.println(hash);
+        
+        if (txtUsername.getText().equals("admin") && BCrypt.checkpw(password, hash)) {
             this.dispose();
             JOptionPane.showMessageDialog(this, "Berhasil login admin");
             new MainPage().setVisible(true);
         }
-        else if(txtUsername.getText().equals("user") && txtPassword.getText().equals("user")){
+        else if(txtUsername.getText().equals("user") && BCrypt.checkpw(password, hash)){
             this.dispose();
             JOptionPane.showMessageDialog(this, "Berhasil login user");
             new MainPageUser().setVisible(true);
