@@ -26,7 +26,7 @@ public class TransactionController {
     private TransactionPage view;
     private TransactionImpl transactionImpl;
     
-    public TranscationController(TransactionPage view){
+    public TransactionController(TransactionPage view){
         this.view = view;
         this.transactionImpl = new TransactionDao();
     }

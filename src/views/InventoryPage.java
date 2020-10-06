@@ -45,8 +45,10 @@ public class InventoryPage extends javax.swing.JFrame {
         model.addColumn("Price");
         model.addColumn("Stock");
         model.addColumn("Supplier");
+        
+        
+        
         itemController = new ItemController(this);
-        getData();
     }
 
     public JTable getTblItem() {
@@ -73,23 +75,6 @@ public class InventoryPage extends javax.swing.JFrame {
         return cbSupplier;
     }
 
-    public void getData() {
-//        model.getDataVector().removeAllElements();
-//        model.fireTableDataChanged();
-//
-//        try {
-//            for (Item item : itemController.getAll()) {
-//                Supplier s = supplierController.findById(item.getSupplier());
-//                model.addRow(new Object[]{item.getId(), item.getNama(), item.getPrice(), item.getStock(), item.getSupplier()+" "+s.getNama()});
-//            }
-//            for (Supplier supplier : supplierController.getAll()) {
-//                cbSupplier.addItem(supplier.getId() +" "+supplier.getNama());
-//            }
-//
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, e);
-//        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -312,7 +297,7 @@ public class InventoryPage extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        itemController.insert();
+        itemController.update();
     }//GEN-LAST:event_btnEditActionPerformed
 
     /**

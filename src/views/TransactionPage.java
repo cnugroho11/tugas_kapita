@@ -7,7 +7,10 @@ import java.sql.PreparedStatement;
 import tools.Koneksi;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import models.Item;
 import models.Transaction;
@@ -41,7 +44,27 @@ public class TransactionPage extends javax.swing.JFrame {
         model.addColumn("Item");
         transactionItemController = new TransactionItemController(this);
     }
+    
+    public JTable getTblTransaction(){
+        return tblTransaction;
+    }
+    
+    public JTextField getTxtId(){
+        return txtId;
+    }
+    
+    public JTextField getTxtQuantity(){
+        return txtQuantity;
+    }
+    
+    public JComboBox getCbBoxTransaction(){
+        return cbTransaksi;
+    }
 
+    public JComboBox getCbBoxItem(){
+        return cbItem;
+    }
+    
     public void getData() {
         
     }
@@ -238,47 +261,19 @@ public class TransactionPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtQuantityActionPerformed
 
     private void tblTransactionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransactionMouseClicked
-        // TODO add your handling code here:
-        txtId.setText(tblTransaction.getValueAt(tblTransaction.getSelectedRow(), 0).toString());
-        txtQuantity.setText(tblTransaction.getValueAt(tblTransaction.getSelectedRow(), 1).toString());
-        cbTransaksi.setSelectedItem(tblTransaction.getValueAt(tblTransaction.getSelectedRow(), 2).toString());
-        cbItem.setSelectedItem(tblTransaction.getValueAt(tblTransaction.getSelectedRow(), 3).toString());
+        transactionItemController.getTableRowData(tblTransaction.getSelectedRow());
     }//GEN-LAST:event_tblTransactionMouseClicked
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        try {
-            String itm = cbItem.getSelectedItem().toString();
-            itm = itm.substring(0, itm.indexOf(' '));
-            transactionItemController.update(Integer.parseInt(txtId.getText()), Integer.parseInt(txtQuantity.getText()), cbTransaksi.getSelectedItem().toString(), cbItem.getSelectedItem().toString().split(" ")[0]);
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        transactionItemController.update();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        DefaultTableModel model = (DefaultTableModel) tblTransaction.getModel();
-        //Ambil baris
-        try {
-            transactionItemController.delete(txtId.getText());
-            getData();
-            //System.out.println(sql);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+        transactionItemController.delete();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        try {
-            String itm = cbItem.getSelectedItem().toString();
-            itm = itm.substring(0, itm.indexOf(' '));
-            transactionItemController.add(Integer.parseInt(txtId.getText()), Integer.parseInt(txtQuantity.getText()), cbTransaksi.getSelectedItem().toString(), cbItem.getSelectedItem().toString());
-            getData();
-//            JOptionPane.showMessageDialog(null, "Update Berhasil");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        transactionItemController.insert();
     }//GEN-LAST:event_btnAddActionPerformed
 //>>>>>>> 27e9a1d4d7653765e951bd97e3779c95805e607f
 

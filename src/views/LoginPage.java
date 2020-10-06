@@ -100,19 +100,17 @@ public class LoginPage extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         //enkripsi bcrypt
         //java mail
-        String password = txtPassword.getText();
-        
         String salt = BCrypt.gensalt();
-        String hash = BCrypt.hashpw(password, salt);
+        String hash = BCrypt.hashpw(txtPassword.getText(), salt);
         
         System.out.println(hash);
         
-        if (txtUsername.getText().equals("admin") && BCrypt.checkpw(password, hash)) {
+        if (txtUsername.getText().equals("admin") && BCrypt.checkpw(txtPassword.getText(), hash)) {
             this.dispose();
             JOptionPane.showMessageDialog(this, "Berhasil login admin");
             new MainPage().setVisible(true);
         }
-        else if(txtUsername.getText().equals("user") && BCrypt.checkpw(password, hash)){
+        else if(txtUsername.getText().equals("user") && BCrypt.checkpw(txtPassword.getText(), hash)){
             this.dispose();
             JOptionPane.showMessageDialog(this, "Berhasil login user");
             new MainPageUser().setVisible(true);

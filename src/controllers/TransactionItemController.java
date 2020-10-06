@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Transaction;
 import models.TransactionItem;
 import tools.Koneksi;
@@ -22,18 +24,17 @@ import views.TransactionPage;
  * @author MangUjang
  */
 public class TransactionItemController {
-    
+
     private TransactionPage view;
     private TransactionItemImpl transactionItemImpl;
-    
+
     public TransactionItemController(TransactionPage view) {
         this.view = view;
-        
         this.transactionItemImpl = new TransactionItemDao();
-        
+
         refreshView();
     }
-    
+
     public void refreshView() {
         view.model.getDataVector().removeAllElements();
         view.model.fireTableDataChanged();
@@ -45,72 +46,38 @@ public class TransactionItemController {
             e.printStackTrace();
         }
     }
-    
-    
 
+    public void getTableRowData(int indexRow) {
+        view.getTxtId().setText(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 0).toString());
+        view.getTxtQuantity().setText(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 1).toString());
+        view.getCbBoxTransaction().setSelectedItem(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 2).toString());
+        view.getCbBoxItem().setSelectedItem(view.getTblTransaction().getValueAt(view.getTblTransaction().getSelectedRow(), 2).toString());
+    }
 
-    public ArrayList<TransactionItem> getAll() throws SQLException {
-        ArrayList<TransactionItem> transactionitems = new ArrayList<>();
-        Statement stat = (Statement) Koneksi.getKoneksi().createStatement();
-        String query = "SELECT * FROM transaction_item";
-        ResultSet res = stat.executeQuery(query);
-        while (res.next()) {
-            TransactionItem transactionitem = new TransactionItem();
-            Object[] obj = new Object[5];
-            obj[0] = res.getString("ID");
-            obj[1] = res.getString("Quantity");
-            obj[2] = res.getString("Transaction_Id");
-            obj[3] = res.getString("Item_Id");
-            transactionitem.setId(Integer.parseInt(obj[0].toString()));
-            transactionitem.setQuantity(Integer.parseInt(obj[1].toString()));
-            transactionitem.setTransaction(obj[2].toString());
-            transactionitem.setItem(obj[3].toString());
-            transactionitems.add(transactionitem);
+    public void insert() {
+        try {
+            transactionItemImpl.add(Integer.parseInt(view.getTxtId().getText()), Integer.parseInt(view.getTxtQuantity().getText()), view.getCbBoxTransaction().getSelectedItem().toString(), view.getCbBoxItem().getSelectedItem().toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return transactionitems;
+        refreshView();
     }
 
-    public TransactionItem findById(String id) throws SQLException {
-        TransactionItem transactionitem = new TransactionItem();
-        Statement query = (Statement) Koneksi.getKoneksi().createStatement();
-        String sql = "SELECT * FROM transaction_item where ID='" + id + "'";
-        ResultSet res = query.executeQuery(sql);
-        while (res.next()) {
-            Object[] obj = new Object[4];
-            obj[0] = res.getString("ID");
-            obj[1] = res.getString("Quantity");
-            obj[2] = res.getString("Transaction");
-            obj[3] = res.getString("Item");
-            transactionitem.setId(Integer.parseInt(obj[0].toString()));
-            transactionitem.setQuantity(Integer.parseInt(obj[1].toString()));
-            transactionitem.setTransaction(obj[2].toString());
-            transactionitem.setItem(obj[3].toString());
-            break;
+    public void delete() {
+        try {
+            transactionItemImpl.delete(view.getTxtId().getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return transactionitem;
+        refreshView();
     }
-
-    public void update(int id, int quantity, String transaction, String item) throws SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("UPDATE transaction_item SET Quantity=?, Transaction_Id=?, Item_Id=? WHERE Id=?");
-        query.setInt(4, id);
-        query.setInt(1, quantity);
-        query.setString(2, transaction);
-        query.setString(3, item);
-        query.executeUpdate();
-    }
-
-    public void add(int id, int quantity, String transaction, String item) throws SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("INSERT INTO transaction_item VALUES (?,?,?,?)");
-        query.setInt(1, id);
-        query.setInt(2, quantity);
-        query.setString(3, transaction);
-        query.setString(4, item);
-        query.executeUpdate();
-    }
-
-    public void delete(String id) throws SQLException, SQLException {
-        PreparedStatement query = Koneksi.con.prepareStatement("DELETE FROM transaction_item WHERE Id = ?");
-        query.setString(1, id);
-        query.executeUpdate();
+    
+    public void update() {
+        try {
+            transactionItemImpl.update(Integer.parseInt(view.getTxtId().getText()), Integer.parseInt(view.getTxtQuantity().toString()), view.getCbBoxTransaction().getSelectedItem().toString(), view.getCbBoxItem().getSelectedItem().toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.refreshView();
     }
 }
