@@ -7,7 +7,9 @@ package tts.kapita.tts.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import tts.kapita.tts.services.LoginRestService;
 import tts.kapita.tts.entities.rest.LoginInput;
 
@@ -22,12 +24,15 @@ public class LoginRestController {
     LoginRestService service;
 
     @GetMapping("")
-    public String index() {
-        LoginInput input = new LoginInput();
-        input.setEmail("cnugroho211@gmail.com");
-        input.setPassword("aa");
+    public String index(Model model) {
+        model.addAttribute("logininput", new LoginInput());
+        return "login";
+    }
+    
+    @PostMapping("login")
+    public String login(LoginInput input){
+        System.out.println(input);
         System.out.println(service.login(input));
-
         return "index";
     }
 }
