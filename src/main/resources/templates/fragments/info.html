@@ -1,0 +1,96 @@
+<div th:fragment="profile-tbl" class="container">
+    <div>TODO write content</div>
+    <table border="1">
+        <tr th:each="as : ${profile}">
+            <td>ID</td>
+            <td th:text="${as.id}"></td>
+        </tr>
+        <tr th:each="as : ${profile}">
+            <td>NAME</td>
+            <td th:text="${as.name}"></td>
+        </tr>
+        <tr th:each="as : ${profile}">
+            <td>BIRTHDATE</td>
+            <td th:text="${as.birthDate}"></td>
+        </tr>
+        <tr th:each="as : ${profile}">
+            <td>GENDER</td>
+            <td th:text="${as.gender}"></td>
+        </tr>
+        <tr th:each="as : ${profile}">
+            <td>EMAIL</td>
+            <td th:text="${as.email}"></td>
+        </tr>
+        <tr th:each="as : ${address}">
+            <td>STREET 1</td>
+            <td th:text="${as.street1}"></td>
+        </tr>
+        <tr th:each="as : ${address}">
+            <td>STREET 2</td>
+            <td th:text="${as.street2}"></td>
+        </tr>
+        <tr th:each="as : ${address}">
+            <td>CITY</td>
+            <td th:text="${as.city}"></td>
+        </tr>
+        <tr th:each="as : ${address}">
+            <td>PROVINCE</td>
+            <td th:text="${as.province}"></td>
+        </tr>
+        <tr th:each="as : ${address}">
+            <td>ZIP</td>
+            <td th:text="${as.zipCode}"></td>
+        </tr>
+        <tr th:each="as : ${contact}">
+            <td>PHONE</td>
+            <td th:text="${as.phone}"></td>
+        </tr>
+        <tr th:each="as : ${contact}">
+            <td>INSTAGRAM</td>
+            <td th:text="${as.instagram}"></td>
+        </tr>
+        <tr th:each="as : ${contact}">
+            <td>LINKEDIN</td>
+            <td th:text="${as.linkedin}"></td>
+        </tr>
+        <tr th:each="as : ${contact}">
+            <td>FACEBOOK</td>
+            <td th:text="${as.facebook}"></td>
+        </tr>
+        <tr th:each="as : ${occupation}">
+            <td>WEBSITE</td>
+            <td th:text="${as.website}"></td>
+        </tr>
+        <tr th:each="as : ${occupation}">
+            <td>CURRENT COMPANY</td>
+            <td th:text="${as.currentCompany}"></td>
+        </tr>
+        <tr th:each="as : ${occupation}">
+            <td>JOB</td>
+            <td th:text="${as.job}"></td>
+        </tr>
+        <tr th:each="as : ${education}">
+            <td>MAJOR</td>
+            <td th:text="${as.major}"></td>
+        </tr>
+        <tr th:each="as : ${education}">
+            <td>UNIVERSITY</td>
+            <td th:text="${as.university}"></td>
+        </tr>
+        <tr th:each="as : ${education}">
+            <td>DEGREE</td>
+            <td th:text="${as.degree}"></td>
+        </tr>
+        <tr th:each="as : ${education}">
+            <td>STATUS</td>
+            <td th:text="${as.status}"></td>
+        </tr>
+    </table>
+    
+    <div th:replace="fragments/forms::basic-form"></div>
+    <div th:replace="fragments/forms::address-form"></div>
+    <div th:replace="fragments/forms::contact-form"></div>
+    <div th:replace="fragments/forms::occupation-form"></div>
+    <div th:replace="fragments/forms::education-form"></div>
+</div>
+
