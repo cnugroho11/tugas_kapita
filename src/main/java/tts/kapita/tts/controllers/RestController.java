@@ -12,16 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import tts.kapita.tts.services.LoginRestService;
 import tts.kapita.tts.entities.rest.LoginInput;
+import tts.kapita.tts.services.ProfileService;
 
 /**
  *
  * @author cnugr
  */
 @Controller
-public class LoginRestController {
+public class RestController {
 
     @Autowired
     LoginRestService service;
+    
 
     @GetMapping("")
     public String index(Model model) {
@@ -34,5 +36,15 @@ public class LoginRestController {
         System.out.println(input);
         System.out.println(service.login(input));
         return "index";
+    }
+    
+    @Autowired
+    ProfileService profileService;
+    
+    @GetMapping("/profile/")
+    public String profileBasic(Model model){
+        model.addAttribute("profile", profileService.getProfileInfo("USER-00013"));
+        System.out.println(profileService.getProfileInfo("USER-00013"));
+        return "profile";
     }
 }

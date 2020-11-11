@@ -12,8 +12,11 @@ import lombok.Data;
  * @author cnugr
  */
 @Data
-public class LoginOutput {
+public class ProfileInfo {
+    private String id;
+    private String name;
+    private String birthDate;
+    private String gender;
+    private String email;
     
-    private UserOutput user;
-    private String status;
 }
