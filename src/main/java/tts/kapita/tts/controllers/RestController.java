@@ -11,11 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import tts.kapita.tts.services.LoginRestService;
+import tts.kapita.tts.services.RegisterRestService;
 import tts.kapita.tts.entities.rest.LoginInput;
 import tts.kapita.tts.entities.rest.ProfileAddress;
 import tts.kapita.tts.entities.rest.ProfileContact;
 import tts.kapita.tts.entities.rest.ProfileEducation;
 import tts.kapita.tts.entities.rest.ProfileInfo;
+import tts.kapita.tts.entities.rest.RegisterInfo;
 import tts.kapita.tts.entities.rest.ProfileOccupation;
 import tts.kapita.tts.services.ProfileService;
 
@@ -29,30 +31,46 @@ public class RestController {
     @Autowired
     LoginRestService service;
     
-
+    String id;
+    
     @GetMapping("")
     public String index(Model model) {
         model.addAttribute("logininput", new LoginInput());
+        model.addAttribute("registerinput", new RegisterInfo());
         return "login";
     }
     
-    @PostMapping("login")
-    public String login(LoginInput input){
-        System.out.println(input);
-        System.out.println(service.login(input));
-        return "index";
+    @Autowired
+    RegisterRestService registerService;
+    
+    //register
+    
+    @PostMapping("/register/")
+    public String saveRegister(RegisterInfo registerInfo){
+        System.out.println(registerInfo);
+        registerService.register(registerInfo);
+        return "redirect:/";
     }
+    
+    @PostMapping("login")
+    public String login(LoginInput input){   
+        System.out.println(service.login(input));
+        id = service.getLoginId(service.login(input));
+        System.out.println(id);
+        return "redirect:/profile/";
+    }
+    //
     
     @Autowired
     ProfileService profileService;
     
     @GetMapping("/profile/")
     public String profileBasic(Model model){
-        model.addAttribute("profile", profileService.getProfileInfo("USER-00013"));
-        model.addAttribute("address", profileService.getProfileAddress("USER-00013"));
-        model.addAttribute("contact", profileService.getProfileContact("USER-00013"));
-        model.addAttribute("occupation", profileService.getProfileOccupation("USER-00013"));
-        model.addAttribute("education", profileService.getProfileEducation("USER-00013"));
+        model.addAttribute("profile", profileService.getProfileInfo(id));
+        model.addAttribute("address", profileService.getProfileAddress(id));
+        model.addAttribute("contact", profileService.getProfileContact(id));
+        model.addAttribute("occupation", profileService.getProfileOccupation(id));
+        model.addAttribute("education", profileService.getProfileEducation(id));
 //        System.out.println(profileService.getProfileInfo("USER-00013"));
 //        System.out.println(profileService.getProfileAddress("USER-00013"));
 //        System.out.println(profileService.getProfileContact("USER-00013"));

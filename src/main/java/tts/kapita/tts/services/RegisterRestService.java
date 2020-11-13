@@ -10,19 +10,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import tts.kapita.tts.entities.rest.LoginInput;
-import tts.kapita.tts.entities.rest.LoginOutput;
-import org.springframework.http.ResponseEntity;
-
+import tts.kapita.tts.entities.rest.RegisterInfo;
 
 /**
  *
  * @author cnugr
  */
 @Service
-public class LoginRestService {
+public class RegisterRestService {
 
     @Autowired
     RestTemplate restTemplate;
@@ -30,18 +28,13 @@ public class LoginRestService {
     @Value("${api.uri}")
     private String uri;
 
-    public LoginOutput login(LoginInput input) {
-        HttpEntity<LoginInput> request = new HttpEntity<>(input, null);
-        ResponseEntity<LoginOutput> responseEntity = restTemplate.exchange(uri + "login",
+    public boolean register(RegisterInfo input) {
+        HttpEntity<RegisterInfo> request = new HttpEntity<>(input, null);
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(uri + "register",
                 HttpMethod.POST,
                 request,
-                new ParameterizedTypeReference<LoginOutput>() {
-        }
-        );
+                new ParameterizedTypeReference<Boolean>() {
+        });
         return responseEntity.getBody();
-    }
-    
-    public String getLoginId(LoginOutput output){
-        return output.getUser().getId();
     }
 }

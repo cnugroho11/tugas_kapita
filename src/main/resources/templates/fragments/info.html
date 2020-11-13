@@ -1,6 +1,9 @@
-<div th:fragment="profile-tbl" class="container">
-    <div>TODO write content</div>
+<div th:fragment="profile-tbl" class="container" style="margin: 20px 0px">
     <table border="1">
+        <tr>
+            <th colspan="2">BASIC INFORMATION</th>
+        </tr>
+        
         <tr th:each="as : ${profile}">
             <td>ID</td>
             <td th:text="${as.id}"></td>
@@ -21,6 +24,11 @@
             <td>EMAIL</td>
             <td th:text="${as.email}"></td>
         </tr>
+
+        <tr>
+            <th colspan="2">ADDRESS INFORMATION</th>
+        </tr>
+
         <tr th:each="as : ${address}">
             <td>STREET 1</td>
             <td th:text="${as.street1}"></td>
@@ -41,6 +49,11 @@
             <td>ZIP</td>
             <td th:text="${as.zipCode}"></td>
         </tr>
+        
+        <tr>
+            <th colspan="2">CONTACT INFORMATION</th>
+        </tr>
+        
         <tr th:each="as : ${contact}">
             <td>PHONE</td>
             <td th:text="${as.phone}"></td>
@@ -57,6 +70,11 @@
             <td>FACEBOOK</td>
             <td th:text="${as.facebook}"></td>
         </tr>
+        
+        <tr>
+            <th colspan="2">OCCUPATION INFORMATION</th>
+        </tr>
+        
         <tr th:each="as : ${occupation}">
             <td>WEBSITE</td>
             <td th:text="${as.website}"></td>
@@ -69,6 +87,11 @@
             <td>JOB</td>
             <td th:text="${as.job}"></td>
         </tr>
+        
+        <tr>
+            <th colspan="2">EDUCATION INFORMATION</th>
+        </tr>
+        
         <tr th:each="as : ${education}">
             <td>MAJOR</td>
             <td th:text="${as.major}"></td>

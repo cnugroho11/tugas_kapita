@@ -1,0 +1,84 @@
+<div th:fragment="register-form">
+    <form th:object="${registerinput}" th:action="@{/register/}" method="POST">
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+            Sign Up
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Enter your data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <td>NAME</td>
+                                <td><input type="text" th:field="*{name}"></td>
+                            </tr>
+                            <tr>
+                                <td>USERNAME</td>
+                                <td><input type="text" th:field="*{username}"></td>
+                            </tr>
+                            <tr>
+                                <td>EMAIL</td>
+                                <td><input type="text" th:field="*{email}"></td>
+                            </tr>
+                            <tr>
+                                <td>PHONE</td>
+                                <td><input type="text" th:field="*{phone}"></td>
+                            </tr>
+                            <tr>
+                                <td>PASSWORD</td>
+                                <td><input type="text" th:field="*{password}"></td>
+                            </tr>
+                            <tr>
+                                <td>GENDER</td>
+                                <td><input type="text" th:field="*{gender}"></td>
+                            </tr>
+                            <tr>
+                                <td>BIRTHDATE</td>
+                                <td><input type="text" th:field="*{birthDate}"></td>
+                            </tr>
+                            <tr>
+                                <td>CURRENT COMPANY</td>
+                                <td><input type="text" th:field="*{currentCompany}"></td>
+                            </tr>
+                            <tr>
+                                <td>JOB</td>
+                                <td><input type="text" th:field="*{job}"></td>
+                            </tr>
+                            <tr>
+                                <td>MAJOR</td>
+                                <td><input type="text" th:field="*{major}"></td>
+                            </tr>
+                            <tr>
+                                <td>UNIVERSITY</td>
+                                <td><input type="text" th:field="*{university}"></td>
+                            </tr>
+                            <tr>
+                                <td>STATUS</td>
+                                <td><input type="text" th:field="*{status}"></td>
+                            </tr>
+                            <tr>
+                                <td>DEGREE</td>
+                                <td><input type="text" th:field="*{degree}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
