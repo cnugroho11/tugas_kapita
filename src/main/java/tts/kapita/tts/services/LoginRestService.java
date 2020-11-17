@@ -44,4 +44,8 @@ public class LoginRestService {
     public String getLoginId(LoginOutput output){
         return output.getUser().getId();
     }
+    
+    public String getLoginUsername(LoginOutput output){
+        return output.getUser().getName();
+    }
 }

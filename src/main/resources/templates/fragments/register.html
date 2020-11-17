@@ -2,9 +2,7 @@
     <form th:object="${registerinput}" th:action="@{/register/}" method="POST">
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
-            Sign Up
-        </button>
+        <button class="btn btn-lg btn-google btn-block text-uppercase" type="button" data-toggle="modal" data-target="#registerModal"><i class="fab fa-google mr-2"></i>Register</button>
 
         <!-- Modal -->
         <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

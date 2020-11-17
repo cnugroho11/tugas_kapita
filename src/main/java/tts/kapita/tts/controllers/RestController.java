@@ -31,7 +31,7 @@ public class RestController {
     @Autowired
     LoginRestService service;
     
-    String id;
+    String id, name;
     
     @GetMapping("")
     public String index(Model model) {
@@ -56,7 +56,9 @@ public class RestController {
     public String login(LoginInput input){   
         System.out.println(service.login(input));
         id = service.getLoginId(service.login(input));
+        name = service.getLoginUsername(service.login(input));
         System.out.println(id);
+        System.out.println(name);
         return "redirect:/profile/";
     }
     //
@@ -79,6 +81,41 @@ public class RestController {
         return "profile";
     }
     
+    @GetMapping("/profile/basic/")
+    public String showBasic(Model model){
+        model.addAttribute("profile", profileService.getProfileInfo(id));
+        return "basic";
+    }
+    
+    @GetMapping("/profile/address/")
+    public String showAddress(Model model){
+        model.addAttribute("address", profileService.getProfileAddress(id));
+        model.addAttribute("profile", profileService.getProfileInfo(id));
+        return "address";
+    }
+    
+    @GetMapping("/profile/contact/")
+    public String showContact(Model model){
+        model.addAttribute("contact", profileService.getProfileContact(id));
+        model.addAttribute("profile", profileService.getProfileInfo(id));
+        return "contact";
+    }
+    
+    @GetMapping("/profile/occupation/")
+    public String showOccupation(Model model){
+        model.addAttribute("occupation", profileService.getProfileOccupation(id));
+        model.addAttribute("profile", profileService.getProfileInfo(id));
+        return "occupation";
+    }
+    
+    @GetMapping("/profile/education/")
+    public String showEducation(Model model){
+        model.addAttribute("education", profileService.getProfileEducation(id));
+        model.addAttribute("profile", profileService.getProfileInfo(id));
+        return "education";
+    }
+        
+        
     @PostMapping("/profile/save/info")
     public String editInfo(ProfileInfo profileInfo) throws InterruptedException{
         Thread.sleep(1500);
