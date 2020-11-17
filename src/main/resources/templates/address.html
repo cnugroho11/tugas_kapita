@@ -52,10 +52,18 @@ and open the template in the editor.
                 </ul>
             </div>
             <span class="navbar-text">
-                Welcome, 
-                <tr th:each="as : ${profile}">
-                    <td th:text="${as.name}"></td>
-                </tr>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Welcome, 
+                        <tr th:each="as : ${profile}">
+                            <td th:text="${as.name}"></td>
+                        </tr>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" style="color: black">Setting</a>
+                        <a class="dropdown-item" href="http://localhost:8084/" style="color: black">Logout</a>
+                    </div>
+                </div>
             </span>
         </div>
     </nav>
