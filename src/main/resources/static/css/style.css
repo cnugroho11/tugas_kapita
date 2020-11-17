@@ -8,6 +8,10 @@ and open the template in the editor.
     Author     : cnugr
 */
 
-input, button {
-    margin:0;
+body {
+    display: inline;
+    background: red;
+}
+container{
+    background: red;
 }

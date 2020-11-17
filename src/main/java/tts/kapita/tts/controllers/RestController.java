@@ -80,31 +80,36 @@ public class RestController {
     }
     
     @PostMapping("/profile/save/info")
-    public String editInfo(ProfileInfo profileInfo){
+    public String editInfo(ProfileInfo profileInfo) throws InterruptedException{
+        Thread.sleep(1500);
         profileService.editProfileInfo(profileInfo);
         return "redirect:/profile/";
     }
     
     @PostMapping("/profile/save/address")
-    public String editAddress(ProfileAddress profileAddress){
+    public String editAddress(ProfileAddress profileAddress) throws InterruptedException{
+        Thread.sleep(1500);
         profileService.editAddressInfo(profileAddress);
         return "redirect:/profile/";
     }
     
     @PostMapping("/profile/save/contact")
-    public String editContact(ProfileContact profileContact){
+    public String editContact(ProfileContact profileContact) throws InterruptedException{
+        Thread.sleep(1500);
         profileService.editContactInfo(profileContact);
         return "redirect:/profile/";
     }
     
     @PostMapping("/profile/save/occupation")
-    public String editOccupation(ProfileOccupation profileOccupation){
+    public String editOccupation(ProfileOccupation profileOccupation) throws InterruptedException{
+        Thread.sleep(1500);
         profileService.editOccupationInfo(profileOccupation);
         return "redirect:/profile/";
     }
     
     @PostMapping("/profile/save/education")
-    public String editEducation(ProfileEducation profileEducation){
+    public String editEducation(ProfileEducation profileEducation) throws InterruptedException{
+        Thread.sleep(1500);
         profileService.editEducationInfo(profileEducation);
         return "redirect:/profile/";
     }
